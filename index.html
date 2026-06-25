@@ -131,10 +131,6 @@
   .ai-item{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:13px;color:var(--muted);}
   .ai-item .dot{width:5px;height:5px;background:var(--accent);flex-shrink:0;}
 
-  .thought{background:var(--card);padding:22px 24px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:2px;}
-  .thought h3{font-size:15px;font-weight:600;margin:4px 0 3px;}
-  .thought p{font-size:12px;color:var(--muted);margin:0;}
-
   footer{padding:28px 24px;border-top:1px solid var(--border);}
   .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
 
@@ -151,7 +147,6 @@
       <a onclick="scrollToId('experience')">Experience</a>
       <a onclick="scrollToId('projects')">Projects</a>
       <a onclick="scrollToId('ai')">AI &amp; Automation</a>
-      <a onclick="scrollToId('thoughts')">Thoughts</a>
       <a onclick="scrollToId('contact')">Contact</a>
     </div>
   </div>
@@ -241,7 +236,9 @@
         <p class="prev">Former Senior Business Analyst</p>
         <p class="org">Viking River Cruises — Los Angeles, CA</p>
         <ul>
-          <li>Lead Apple Pay integration; paved the way for Samsung Pay and Chase Pay</li>
+          <li>Led Apple Pay integration to full production deployment across the booking platform; paved the way for Samsung Pay and Chase Pay</li>
+          <li>Leading payment tokenization integration to modernize processor security and reduce PCI scope</li>
+          <li>Architecting new Databricks ETL pipelines ingesting data from legacy industry vendor systems</li>
           <li>Liaise between third-party development teams and bank processors for payment initiatives</li>
           <li>Build and optimize SQL Server tables, stored procedures, views, and functions</li>
           <li>Build Databricks notebooks and dashboards in Python and SQL with automated alerting</li>
@@ -301,6 +298,7 @@
       </div>
 
     </div>
+    <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:36px;">Additional 10+ years of retail experience</p>
   </div>
 </section>
 
@@ -310,14 +308,17 @@
     <p class="eyebrow">Projects</p>
     <h2>What I Have Built</h2>
     <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">
-      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Payments</span><h3 style="font-size:16px;margin:8px 0;">Apple Pay Integration</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">End-to-end Apple Pay implementation across Viking's booking platform with bank processor integration.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Digital payments live across booking platform</span></div><span class="tag-mute">VB.NET</span><span class="tag-mute">C#</span><span class="tag-mute">APIs</span></div>
+      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">AI</span><h3 style="font-size:16px;margin:8px 0;">AI Agent Research System</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Multi-agent research system on local LLMs with RAG retrieval and n8n orchestration.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Operational AI research on local infra</span></div><span class="tag-mute">LM Studio</span><span class="tag-mute">n8n</span><span class="tag-mute">RAG</span></div>
+      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">AI</span><h3 style="font-size:16px;margin:8px 0;">Knowledge Architecture</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Obsidian-based knowledge system connected to AI agents for institutional retrieval.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Queryable knowledge with AI interfaces</span></div><span class="tag-mute">Obsidian</span><span class="tag-mute">RAG</span><span class="tag-mute">LLMs</span></div>
+      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">AI</span><h3 style="font-size:16px;margin:8px 0;">Options P&amp;L Analytics Engine</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Personal trading system tracking options positions, realized/unrealized P&amp;L, and risk exposure in real time.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Live position and performance tracking</span></div><span class="tag-mute">Python</span><span class="tag-mute">SQL</span><span class="tag-mute">APIs</span></div>
+      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Payments</span><h3 style="font-size:16px;margin:8px 0;">Apple Pay Integration</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">End-to-end Apple Pay implementation across Viking's booking platform with bank processor integration.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Live in production across booking platform</span></div><span class="tag-mute">VB.NET</span><span class="tag-mute">C#</span><span class="tag-mute">APIs</span></div>
+      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Payments</span><h3 style="font-size:16px;margin:8px 0;">Payment Tokenization</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Integrating payment tokenization to modernize processor security and reduce PCI scope across the booking platform.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">In progress</span></div><span class="tag-mute">VB.NET</span><span class="tag-mute">C#</span><span class="tag-mute">APIs</span></div>
+      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Data Engineering</span><h3 style="font-size:16px;margin:8px 0;">Legacy Vendor ETL Pipelines</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">New Databricks ETL pipelines ingesting and standardizing data from legacy industry vendor systems.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">In progress</span></div><span class="tag-mute">Databricks</span><span class="tag-mute">Python</span><span class="tag-mute">SQL</span></div>
       <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Analytics</span><h3 style="font-size:16px;margin:8px 0;">SSRS to Power BI Migration</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Modernizing legacy financial reports into interactive Power BI dashboards with real-time connectivity.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Modern executive dashboards replacing legacy reports</span></div><span class="tag-mute">Power BI</span><span class="tag-mute">SSRS</span><span class="tag-mute">SQL</span></div>
       <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Data Engineering</span><h3 style="font-size:16px;margin:8px 0;">Databricks Monitoring</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Notebooks and dashboards in Python and SQL for pipeline monitoring with automated alerting.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Automated monitoring across data pipelines</span></div><span class="tag-mute">Databricks</span><span class="tag-mute">Python</span></div>
       <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Finance</span><h3 style="font-size:16px;margin:8px 0;">GIPS Compliance</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Led full GIPS Compliance Certification. Designed data flows, reporting, and audit procedures.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Firm-wide GIPS certification achieved</span></div><span class="tag-mute">GIPS</span><span class="tag-mute">SQL Server</span><span class="tag-mute">SSRS</span></div>
       <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Enterprise</span><h3 style="font-size:16px;margin:8px 0;">Portfolio System Platform</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Implemented SS&amp;C Eze OMS and Advent APX with real-time monitoring and brokerage integrations.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">End-to-end portfolio operations</span></div><span class="tag-mute">SS&amp;C Eze</span><span class="tag-mute">Advent APX</span><span class="tag-mute">PostgreSQL</span></div>
       <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">Data Engineering</span><h3 style="font-size:16px;margin:8px 0;">Fund Revenue Architecture</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Revenue data flows from SQL Server to PostgreSQL, capital attribution, and performance metric integration.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Unified fund revenue pipeline</span></div><span class="tag-mute">SQL Server</span><span class="tag-mute">PostgreSQL</span><span class="tag-mute">ETL</span></div>
-      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">AI</span><h3 style="font-size:16px;margin:8px 0;">AI Agent Research System</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Multi-agent research system on local LLMs with RAG retrieval and n8n orchestration.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Operational AI research on local infra</span></div><span class="tag-mute">LM Studio</span><span class="tag-mute">n8n</span><span class="tag-mute">RAG</span></div>
-      <div class="card" style="padding:24px;"><span style="font-size:10px;color:var(--accent);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">AI</span><h3 style="font-size:16px;margin:8px 0;">Knowledge Architecture</h3><p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Obsidian-based knowledge system connected to AI agents for institutional retrieval.</p><div style="background:var(--accentDim);padding:8px 12px;margin-bottom:12px;"><span style="font-size:11px;color:var(--accent);">Queryable knowledge with AI interfaces</span></div><span class="tag-mute">Obsidian</span><span class="tag-mute">RAG</span><span class="tag-mute">LLMs</span></div>
     </div>
   </div>
 </section>
@@ -351,19 +352,6 @@
       <button class="tab-btn" onclick="showTab(3,this)">Vision</button>
     </div>
     <div class="card ai-panel" id="ai-panel" style="padding:36px 32px;"></div>
-  </div>
-</section>
-
-<!-- THOUGHTS -->
-<section id="thoughts" class="alt">
-  <div class="wrap">
-    <p class="eyebrow">Thoughts</p>
-    <h2>Writing and Thinking</h2>
-    <div class="thought"><div><span class="tag">Data</span><h3>Why Financial Reporting Migrations Fail</h3><p>Lessons from SSRS to Power BI. The hard part is never the tool.</p></div><span style="color:var(--muted);">→</span></div>
-    <div class="thought"><div><span class="tag">Enterprise</span><h3>The Integration Problem Nobody Talks About</h3><p>Systems that don't talk cost you decision latency, not just tech debt.</p></div><span style="color:var(--muted);">→</span></div>
-    <div class="thought"><div><span class="tag">Finance</span><h3>What GIPS Taught Me About Data Trust</h3><p>Institutional-grade data standards applied to every system since.</p></div><span style="color:var(--muted);">→</span></div>
-    <div class="thought"><div><span class="tag">Vision</span><h3>The Next Operating System for Business</h3><p>Agent workforces and knowledge systems will replace departments and licenses.</p></div><span style="color:var(--muted);">→</span></div>
-    <div class="thought"><div><span class="tag">Strategy</span><h3>Modernize With Purpose</h3><p>Not every legacy system needs replacing. How to decide what to modernize.</p></div><span style="color:var(--muted);">→</span></div>
   </div>
 </section>
 
@@ -405,7 +393,7 @@
   });
 
   var aiTabs = [
-    { title:"Building Operational AI", body:"Multi-agent architectures handling research, data processing, and decision support through n8n with human-in-the-loop checkpoints.", items:["Multi-agent orchestration","Local LLMs (LM Studio, Gemma)","RAG knowledge retrieval","Human-in-the-loop workflows","Business process automation"] },
+    { title:"Building Operational AI", body:"Multi-agent architectures handling research, data processing, and decision support through n8n with human-in-the-loop checkpoints. Currently researching agent orchestration frameworks and forward-looking agent workforce designs.", items:["Agent orchestration frameworks","Agent workforce design","Local LLMs (LM Studio, Gemma)","RAG knowledge retrieval","Human-in-the-loop workflows","Business process automation"] },
     { title:"Workflow Automation", body:"n8n workflows connecting AI to business processes — triggering agents, routing decisions, processing data.", items:["n8n workflow design","Event-driven pipelines","Cross-system orchestration","Error handling and retry","Monitoring and alerting"] },
     { title:"Operational Knowledge Systems", body:"Obsidian-based knowledge architecture connected to RAG pipelines and AI agents for institutional retrieval.", items:["Obsidian architecture","RAG pipelines","Semantic search","Research automation","Content generation"] },
     { title:"The Next Operating System for Business", body:"The enterprise of the next decade will organize around agent workforces, knowledge systems, and decision intelligence.", items:["AI employee architectures","Human + AI collaboration","Decision intelligence","Autonomous workflows","Enterprise knowledge graphs"] }

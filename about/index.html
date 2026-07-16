@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | Walter Roby</title>
+<meta name="description" content="Learn more about Walter L. Roby Jr., his background in data engineering, enterprise systems, financial technology, and how he approaches modern business architecture.">
+<link rel="canonical" href="https://walterroby.com/about/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About Walter L. Roby Jr.">
+<meta property="og:description" content="Background, operating philosophy, and focus areas across data engineering, enterprise systems, and AI-enabled operations.">
+<meta property="og:url" content="https://walterroby.com/about/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About Walter L. Roby Jr.">
+<meta name="twitter:description" content="Background, experience, and operating philosophy across data engineering, enterprise systems, and AI-enabled operations.">
+
+<style>
+  :root{
+    --bg:#080E1A; --bgAlt:#0F1729; --card:#151F35;
+    --accent:#C9A84C; --accentDim:rgba(201,168,76,0.15);
+    --text:#E2E7F0; --muted:#7A849A; --blue:#4A7BF7;
+    --border:rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box;margin:0;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent);color:var(--bg);}
+  .wrap{max-width:980px;margin:0 auto;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(8,14,26,0.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+  .navbar{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;gap:16px;}
+  .logo{font-family:Georgia,serif;font-size:18px;font-weight:700;color:var(--accent);}
+  .navlinks{display:flex;gap:18px;flex-wrap:wrap;}
+  .navlinks a{color:var(--muted);font-size:12px;}
+  .navlinks a:hover,.navlinks a.current{color:var(--accent);}
+  main{padding:64px 24px 90px;}
+  .eyebrow{color:var(--accent);font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+  h1{font-size:clamp(34px,5vw,58px);line-height:1.08;font-family:Georgia,serif;max-width:760px;}
+  .lead{font-size:18px;color:var(--muted);max-width:700px;margin-top:22px;}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:32px;}
+  .btn{display:inline-block;padding:14px 26px;font-size:14px;font-weight:600;border:1px solid var(--accent);}
+  .btn-primary{background:var(--accent);color:var(--bg);}
+  .btn-ghost{color:var(--accent);background:transparent;}
+  section{padding-top:56px;}
+  h2{font-size:28px;font-family:Georgia,serif;margin-bottom:20px;}
+  .grid{display:grid;gap:18px;}
+  .card{background:var(--card);border:1px solid var(--border);padding:28px;}
+  .card p + p{margin-top:14px;}
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+  .principles .card{padding:22px;}
+  .principles h3,.timeline h3{font-size:15px;margin-bottom:10px;}
+  .timeline{display:grid;gap:16px;}
+  .timeline p{color:var(--muted);font-size:14px;}
+  .muted{color:var(--muted);}
+  footer{padding:28px 24px;border-top:1px solid var(--border);}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+  @media(max-width:640px){
+    .navlinks{display:none;}
+    main{padding-top:48px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navbar wrap">
+    <a class="logo" href="/">Walter Roby</a>
+    <div class="navlinks">
+      <a href="/">Home</a>
+      <a class="current" href="/about/">About</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#projects">Projects</a>
+      <a href="/#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">About</p>
+    <h1>I build business systems that make data trustworthy, useful, and operational.</h1>
+    <p class="lead">My work sits at the intersection of data engineering, enterprise systems, financial technology, and execution leadership. I spend most of my time turning disconnected tools, reporting gaps, and process friction into systems leaders can actually rely on.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/#contact">Start a Conversation</a>
+      <a class="btn btn-ghost" href="/#projects">View Projects</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+      <div class="card">
+        <h2>Background</h2>
+        <p class="muted">I started in reporting and operational analysis at Investor's Business Daily, where I learned an early lesson that still shapes my work: data only matters if it reaches the right person in the right format at the right time.</p>
+        <p class="muted">That foundation led me into hedge fund operations and business systems at O'Neil Global Advisors, where I worked across GIPS compliance, portfolio platforms, reporting architecture, and fund data flows spanning SQL Server and PostgreSQL.</p>
+        <p class="muted">At Viking River Cruises, that same systems mindset expanded into payment integrations, Databricks pipelines, reporting modernization, and coordination across bank processors, third-party vendors, finance, and internal engineering teams.</p>
+      </div>
+      <div class="card">
+        <h2>Current Focus</h2>
+        <p class="muted">My center of gravity is data engineering: pipelines, warehousing, reporting platforms, and the operating processes around them. I am interested in the full path from raw source data to decision-ready outputs.</p>
+        <p class="muted">Alongside that, I am building with AI agents, local LLM tooling, retrieval systems, and knowledge architecture. The goal is not novelty. The goal is to design systems that reduce coordination cost, improve clarity, and let people make better decisions faster.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How I Operate</h2>
+    <div class="principles">
+      <div class="card">
+        <h3>Systems First</h3>
+        <p class="muted">Tools matter less than the operating model they serve. I start with data flow, ownership, and decision points before choosing implementation details.</p>
+      </div>
+      <div class="card">
+        <h3>Trust Over Volume</h3>
+        <p class="muted">A dashboard, data mart, or integration that leaders cannot trust creates more damage than silence. Reliability is part of the product.</p>
+      </div>
+      <div class="card">
+        <h3>Execution Across Functions</h3>
+        <p class="muted">The hard part is usually not the technology. It is aligning engineering, finance, compliance, operations, and vendors around one clear implementation path.</p>
+      </div>
+      <div class="card">
+        <h3>Modernize With Purpose</h3>
+        <p class="muted">I care about practical upgrades: replacing brittle legacy workflows, improving observability, and putting better information in front of decision-makers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Career Throughline</h2>
+    <div class="timeline">
+      <div class="card">
+        <h3>Investor's Business Daily</h3>
+        <p>Built reporting and automation that connected operational needs to usable outputs. This is where I learned to treat data delivery as a business problem, not just a technical one.</p>
+      </div>
+      <div class="card">
+        <h3>O'Neil Global Advisors</h3>
+        <p>Worked across hedge fund operations, platform administration, GIPS compliance, data architecture, and reporting. The work demanded precision, auditability, and close partnership with leadership.</p>
+      </div>
+      <div class="card">
+        <h3>Viking River Cruises</h3>
+        <p>Lead initiatives spanning payment systems, data pipelines, report modernization, enterprise integrations, and business systems architecture. The role sits at the edge of finance, engineering, and execution leadership.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot wrap">
+    <span style="font-family:Georgia,serif;font-size:15px;font-weight:700;color:var(--accent);">Walter Roby Jr.</span>
+    <span style="font-size:11px;color:var(--muted);">walterroby.com/about/</span>
+  </div>
+</footer>
+
+</body>
+</html>

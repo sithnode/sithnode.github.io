@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/styles.css">
+<script src="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);font-family:var(--font-body)}
+a{color:var(--color-accent)} a:hover{color:var(--color-accent-600)}
+@keyframes cub-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes cub-work{from{transform:rotate(-7deg)}to{transform:rotate(9deg)}}
+@keyframes cub-fumble{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes cub-drop{from{transform:rotate(14deg)}to{transform:rotate(26deg)}}
+@keyframes cub-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes cub-blink{50%{opacity:0}}
+@keyframes cub-pop{from{transform:scale(0);opacity:0}70%{transform:scale(1.12)}to{transform:scale(1);opacity:1}}
+@keyframes cub-zz{0%{opacity:0;transform:translate(0,0) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translate(14px,-34px) scale(1.25)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:16px;padding:18px 32px;flex-wrap:wrap">
+    <a href="Splash.dc.html" style="text-decoration:none"><span style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">The Cubicle</span></a>
+    <span style="font-size:13px;color:var(--color-neutral-600)">The Floor — office POC · managers delegate across teams, every pose is a real event</span>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <span class="tag tag-accent-2">{{ nWorking }}&nbsp;working</span>
+      <span class="tag tag-neutral">{{ nIdle }}&nbsp;idle</span>
+      <span class="tag tag-accent">{{ nFumble }}&nbsp;fumbling</span>
+    </div>
+  </div>
+
+  <div style="flex:1;padding:0 32px 40px">
+    <div style="max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:16px">
+      <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+        <div style="border-radius:calc(var(--radius-lg) * 1.3);overflow:hidden;border:1px solid var(--color-divider);box-shadow:var(--shadow-sm);display:flex;flex-direction:column">
+          <div style="background:{{ r.wall }};padding:14px 22px 0;display:flex;align-items:flex-end;gap:16px;min-height:150px">
+            <div style="display:flex;flex-direction:column;gap:6px;padding-bottom:14px">
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--color-neutral-800)">{{ r.name }}</span>
+              <span style="font-size:11px;color:var(--color-neutral-700)">mgr · {{ r.mgrName }}</span>
+            </div>
+            <div style="margin-left:auto;flex:none;padding-right:10px">{{ r.mgrEl }}</div>
+          </div>
+          <div style="background:var(--color-neutral-100);padding:26px 22px 14px;display:flex;flex-wrap:wrap;gap:6px 12px;border-top:3px solid {{ r.trim }}">
+            <sc-for list="{{ r.workers }}" as="a" hint-placeholder-count="6">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px;width:78px">
+                {{ a.el }}
+                <div style="font-size:10.5px;font-weight:600;color:var(--color-text);line-height:1">{{ a.name }}</div>
+                <div style="font-family:ui-monospace,Menlo,monospace;font-size:8.5px;color:{{ a.capColor }};line-height:1.2">{{ a.cap }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  TEAMS = [
+    ['Research', 'Rhonda', 176, 'the market scan'],
+    ['Engineering', 'Stan', 226, 'the checkout bug'],
+    ['Finance', 'Deb', 95, 'the Q3 numbers'],
+    ['Marketing', 'Marge', 46, 'the press blurb'],
+    ['Operations', 'Carl', 9, 'the load test'],
+    ['Legal', 'Phil', 315, 'the contract review'],
+  ];
+  NAMES = 'Bolt,Fern,Pip,Mox,Tilda,Gus,Nova,Rye,Sable,Twig,Juno,Ozzy,Wren,Bix,Clem,Dot,Ez,Flo,Gil,Hux,Ivy,Jax,Kit,Lux,Moe,Nib,Oat,Pom,Quip,Rud,Sox,Tam,Umi,Vee,Wilt,Xan,Yam,Zeb,Ash,Birch,Cove,Dune,Elm,Fog,Gale,Hail,Iris,Jute,Kelp,Loam,Mist,Nook,Onyx,Pine'.split(',');
+  TOOLS = ['web_search', 'fetch', 'write', 'code_run', 'shell', 'spreadsheets', 'summarize', 'data_viz', 'email', 'translate'];
+  ERRS = ['retrying\u2026', 'tool error', 'rate limited'];
+  WALLS = ['var(--color-accent-2-100)', 'var(--color-accent-100)', 'var(--color-neutral-200)'];
+  TRIMS = ['var(--color-accent-2-300)', 'var(--color-accent-300)', 'var(--color-neutral-400)'];
+
+  state = { tick: 0, convo: null };
+
+  async componentDidMount() {
+    this.M = await import(new URL('./mascot.js', document.baseURI).href);
+    const GEARS = ['none', 'hardhat', 'beret', 'cap', 'antenna'];
+    const PROPS = ['wrench', 'magnifier', 'pencil', 'calculator', 'clipboard', 'megaphone', 'flask', 'coffee'];
+    let idx = 0;
+    this.teams = this.TEAMS.map(([name, mgrName, hue, task], ti) => ({
+      name, mgrName, hue, task, short: name.slice(0, name === 'Engineering' ? 3 : 3),
+      workers: Array.from({ length: ti % 2 === 0 ? 8 : 7 }, () => {
+        const i = idx++;
+        const s = Math.random() < 0.7 ? 'working' : 'idle';
+        return {
+          name: this.NAMES[i % this.NAMES.length],
+          hue: [24, 95, 46, 315, 226, 176, 9, 135][(i * 3) % 8],
+          gear: GEARS[(i * 5) % 5], prop: PROPS[(i * 7) % 8],
+          s, cap: s === 'working' ? this.TOOLS[i % this.TOOLS.length] : 'awaiting task',
+        };
+      }),
+    }));
+    this.allWorkers = this.teams.flatMap((t) => t.workers);
+    // worker state churn
+    this._w = setInterval(() => {
+      for (let k = 0; k < 7; k++) {
+        const a = this.allWorkers[Math.floor(Math.random() * this.allWorkers.length)];
+        const r = Math.random();
+        a.s = r < 0.66 ? 'working' : r < 0.9 ? 'idle' : 'fumble';
+        a.cap = a.s === 'working' ? this.TOOLS[Math.floor(Math.random() * this.TOOLS.length)]
+          : a.s === 'idle' ? 'awaiting task' : this.ERRS[Math.floor(Math.random() * this.ERRS.length)];
+      }
+      this.forceUpdate();
+    }, 1500);
+    // manager-to-manager delegation loop: ask → answer → clear
+    this._m = setInterval(() => {
+      const n = this.teams.length;
+      const a = Math.floor(Math.random() * n);
+      let b = Math.floor(Math.random() * n); if (b === a) b = (a + 1) % n;
+      this.setState({ convo: { a, b, phase: 0 } });
+      this._t1 = setTimeout(() => this.setState({ convo: { a, b, phase: 1 } }), 2200);
+      this._t2 = setTimeout(() => this.setState({ convo: null }), 4600);
+    }, 6500);
+    this.forceUpdate();
+  }
+  componentWillUnmount() { clearInterval(this._w); clearInterval(this._m); clearTimeout(this._t1); clearTimeout(this._t2); }
+
+  mEl(opts, size) {
+    if (!this.M) return null;
+    return React.createElement('div', { style: { width: size + 'px', lineHeight: 0, flex: 'none' }, dangerouslySetInnerHTML: { __html: this.M.mascotSVG({ ...opts, styleDir: 'a', size }) } });
+  }
+
+  bubble(text, warn) {
+    return React.createElement('div', {
+      style: { position: 'absolute', bottom: '100%', right: '-6px', marginBottom: '3px', background: '#f9f4ed', border: '1.5px solid ' + (warn ? '#c67139' : '#d8cdbb'), borderRadius: '12px', padding: '6px 10px', boxShadow: '0 3px 8px rgba(46,43,37,.10)', animation: 'cub-pop .35s cubic-bezier(.34,1.56,.64,1) both', whiteSpace: 'nowrap', lineHeight: 1, fontFamily: 'Figtree, sans-serif', fontSize: '11.5px', fontWeight: 600, color: warn ? '#8c491a' : '#2e2b25', zIndex: 5 },
+    }, text, React.createElement('div', { style: { position: 'absolute', top: '100%', right: '22px', width: '9px', height: '9px', background: '#f9f4ed', borderRight: '1.5px solid ' + (warn ? '#c67139' : '#d8cdbb'), borderBottom: '1.5px solid ' + (warn ? '#c67139' : '#d8cdbb'), transform: 'translateY(-52%) rotate(45deg)' } }));
+  }
+
+  zzz() {
+    const z = (d, s, x) => React.createElement('span', {
+      key: d, style: { position: 'absolute', bottom: '86%', left: 52 + x + '%', fontFamily: 'Figtree, sans-serif', fontWeight: 700, fontSize: s + 'px', color: '#a19786', opacity: 0, animation: 'cub-zz 2.4s ease-out ' + d + 's infinite', pointerEvents: 'none' },
+    }, 'z');
+    return [z(0, 11, 0), z(0.8, 14, 8), z(1.6, 17, 16)];
+  }
+
+  renderVals() {
+    if (!this.teams) return { rooms: [], nWorking: 0, nIdle: 0, nFumble: 0 };
+    const convo = this.state.convo;
+    const capColor = { working: 'var(--color-accent-2-700)', idle: 'var(--color-neutral-500)', fumble: 'var(--color-accent-700)' };
+
+    const rooms = this.teams.map((t, ti) => {
+      const fumbler = t.workers.find((w) => w.s === 'fumble');
+      let mgrBubble = null;
+      if (convo && ti === convo.a) {
+        const target = this.teams[convo.b];
+        mgrBubble = this.bubble(convo.phase === 0 ? `${target.mgrName} — can ${target.name} take ${this.teams[convo.a].task}?` : 'perfect, sending it over \u2192', false);
+      } else if (convo && ti === convo.b) {
+        mgrBubble = convo.phase === 1 ? this.bubble(`on it \u2014 triaging to ${t.workers[0].name}`, false) : null;
+      } else if (fumbler) {
+        mgrBubble = this.bubble(`\u26a0 ${fumbler.name} hit a snag \u2014 reassigning`, true);
+      }
+      const talking = convo && (ti === convo.a || ti === convo.b);
+      const mgrEl = React.createElement('div', { style: { position: 'relative' } },
+        mgrBubble,
+        this.mEl({ hue: t.hue, gear: 'headset', prop: 'clipboard', expr: talking || fumbler ? 'focused' : 'happy', state: fumbler ? 'working' : 'idle' }, 104)
+      );
+      return {
+        name: t.name, mgrName: t.mgrName, mgrEl,
+        wall: this.WALLS[ti % 3], trim: this.TRIMS[ti % 3],
+        workers: t.workers.map((a) => ({
+          name: a.name, cap: a.cap, capColor: capColor[a.s],
+          el: React.createElement('div', { style: { position: 'relative' } },
+            a.s === 'idle' ? this.zzz() : null,
+            this.mEl({ hue: a.hue, gear: a.gear, prop: a.prop, expr: a.s === 'working' ? 'focused' : a.s === 'fumble' ? 'worried' : 'sleepy', state: a.s }, 58)
+          ),
+        })),
+      };
+    });
+    const counts = this.allWorkers.reduce((c, a) => (c[a.s]++, c), { working: 0, idle: 0, fumble: 0 });
+    return { rooms, nWorking: counts.working, nIdle: counts.idle, nFumble: counts.fumble };
+  }
+}
+
+</script>
+</body>
+</html>

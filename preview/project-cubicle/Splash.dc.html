@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/styles.css">
+<script src="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);font-family:var(--font-body)}
+a{color:var(--color-accent)} a:hover{color:var(--color-accent-600)}
+@keyframes cub-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes cub-step{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes cub-work{from{transform:rotate(-7deg)}to{transform:rotate(9deg)}}
+@keyframes cub-fumble{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes cub-drop{from{transform:rotate(14deg)}to{transform:rotate(26deg)}}
+@keyframes cub-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes cub-blink{50%{opacity:0}}
+@keyframes cub-pop{from{transform:scale(0);opacity:0}70%{transform:scale(1.12)}to{transform:scale(1);opacity:1}}
+@keyframes cub-hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-16px)}}
+textarea::placeholder{color:var(--color-neutral-500)}
+input::placeholder{color:var(--color-neutral-500)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;overflow:hidden;position:relative">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 32px;position:relative;z-index:3">
+    <span style="font-family:var(--font-heading);font-size:22px;color:var(--color-text);cursor:pointer" onClick="{{ goSplash }}">The Cubicle</span>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:4px">
+        <button class="{{ navHomeCls }}" onClick="{{ goSplash }}" style="border-radius:999px;font-size:13px;padding:7px 16px">Home</button>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <button class="{{ navCoCls }}" onClick="{{ goOrg }}" style="border-radius:999px;font-size:13px;padding:7px 16px">The Company</button>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <a href="Office Arcade.dc.html" class="btn btn-ghost" style="border-radius:999px;font-size:13px;padding:7px 16px;text-decoration:none">The Floor</a>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <a href="Skills Admin.dc.html" class="btn btn-ghost" style="border-radius:999px;font-size:13px;padding:7px 16px;text-decoration:none">Skills</a>
+      </div>
+    </div>
+  </div>
+
+
+
+  <sc-if value="{{ viewOrg }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:8px 32px 48px">
+      <div style="max-width:1280px;margin:0 auto">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px">
+          <sc-for list="{{ depts }}" as="d" hint-placeholder-count="6">
+            <div class="card" style="gap:12px;padding:18px 20px">
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <div style="font-family:var(--font-heading);font-size:18px">{{ d.name }}</div>
+                <span class="tag tag-accent-2">{{ d.mission }}</span>
+                <span style="margin-left:auto;font-size:11px;color:var(--color-neutral-600)">{{ d.count }} agents</span>
+              </div>
+              <sc-for list="{{ d.teams }}" as="t" hint-placeholder-count="2">
+                <div style="background:var(--color-neutral-200);border-radius:var(--radius-lg);padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+                  <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--color-neutral-700)">{{ t.name }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:4px 10px">
+                    <sc-for list="{{ t.agents }}" as="a" hint-placeholder-count="4">
+                      <div onClick="{{ a.open }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;width:72px;cursor:pointer;border-radius:12px;padding:2px 0" style-hover="background:var(--color-neutral-200)">
+                        {{ a.el }}
+                        <div style="font-size:10.5px;font-weight:600;color:var(--color-text);line-height:1">{{ a.name }}</div>
+                        <div style="font-family:ui-monospace,Menlo,monospace;font-size:8.5px;color:{{ a.capColor }};line-height:1.2;text-align:center">{{ a.cap }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:70px"></div>
+      </div>
+      <div style="position:fixed;left:0;right:0;bottom:26px;display:flex;justify-content:center;z-index:30;pointer-events:none">
+        <button class="btn btn-primary" onClick="{{ goHall }}" style="border-radius:999px;padding:13px 34px;box-shadow:var(--shadow-lg);pointer-events:auto">Manage Company · {{ hiredCount }} hired</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ viewSplash }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;padding:0 24px 200px;position:relative;z-index:2">
+      <h1 style="margin:0;font-family:var(--font-heading);font-weight:400;font-size:44px;color:var(--color-text);text-align:center">What needs doing?</h1>
+      <div style="width:min(640px,100%);background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:calc(var(--radius-lg) * 1.4);box-shadow:var(--shadow-md);padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+        <textarea value="{{ brief }}" onChange="{{ onBrief }}" placeholder="Describe the job. The crew figures out the rest." rows="3" style="border:none;outline:none;background:transparent;resize:none;font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--color-text);width:100%"></textarea>
+        <div style="display:flex;justify-content:flex-end">
+          <button class="btn btn-primary" onClick="{{ clockIn }}" style="border-radius:999px;padding:10px 26px">Clock in</button>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:230px;z-index:1;pointer-events:none;filter:saturate(.85)">
+      <sc-for list="{{ crew }}" as="m" hint-placeholder-count="5">
+        <div style="position:absolute;bottom:-26px;left:{{ m.x }}%;width:0;display:flex;justify-content:center;transition:left 2.1s cubic-bezier(.45,.05,.55,.95)">{{ m.el }}</div>
+      </sc-for>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:14px;background:var(--color-surface);border-top:1px solid var(--color-divider)"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ viewHall }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:8px 32px 48px">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:16px;max-width:1180px;margin-left:auto;margin-right:auto">
+        <h2 style="margin:0;font-family:var(--font-heading);font-weight:400;font-size:30px">Company Management</h2>
+        <span style="font-size:13.5px;color:var(--color-neutral-600)">{{ hallSub }}</span>
+      </div>
+      <div style="max-width:1180px;margin:0 auto 18px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:999px;padding:10px 18px;box-shadow:var(--shadow-sm);max-width:560px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-neutral-600)" stroke-width="2.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20 l-3.5 -3.5"></path></svg>
+          <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Search skills — try “Web Research”, “Summarize”…" style="border:none;outline:none;background:transparent;font-family:var(--font-body);font-size:14px;color:var(--color-text);flex:1">
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <span style="font-size:11px;color:var(--color-neutral-600);margin-right:2px">Skill pool:</span>
+          <sc-for list="{{ skillFilters }}" as="s" hint-placeholder-count="10">
+            <button onClick="{{ s.pick }}" style="font-family:ui-monospace,Menlo,monospace;font-size:10.5px;padding:4px 11px;border-radius:999px;cursor:pointer;border:1.5px solid {{ s.bc }};background:{{ s.bg }};color:{{ s.fg }}">{{ s.t }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:14px;max-width:1180px;margin:0 auto">
+        <div onClick="{{ goBuilder }}" style="border:2px dashed var(--color-neutral-400);border-radius:calc(var(--radius-lg) * 1.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center;cursor:pointer;background:transparent" style-hover="background:var(--color-neutral-200)">
+          <div style="opacity:.4">{{ ghostEl }}</div>
+          <div style="font-family:var(--font-heading);font-size:17px">Build your own</div>
+          <div style="font-size:12px;color:var(--color-neutral-600)">Pick the look, stack the skills, write the brain.</div>
+        </div>
+        <sc-for list="{{ roster }}" as="p" hint-placeholder-count="8">
+          <div class="card" style="align-items:center;text-align:center;gap:8px;padding:18px;border:{{ p.border }};box-shadow:var(--shadow-sm)">
+            <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer">
+              {{ p.el }}
+              <div style="font-family:var(--font-heading);font-size:17px;line-height:1.1">{{ p.name }}</div>
+            </div>
+            <span class="tag tag-accent-2">{{ p.occ }}</span>
+            <div style="font-size:11.5px;color:var(--color-neutral-700);min-height:30px;line-height:1.35">{{ p.tagline }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
+              <sc-for list="{{ p.skills }}" as="s" hint-placeholder-count="2">
+                <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;padding:3px 8px;border-radius:999px;background:var(--color-neutral-200);color:var(--color-neutral-800)">{{ s.t }}</span>
+              </sc-for>
+            </div>
+            <button class="{{ p.btnClass }}" onClick="{{ p.toggle }}" style="width:100%;border-radius:999px">{{ p.btnLabel }}</button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ agentOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeAgent }}" style="position:fixed;inset:0;background:rgba(32,30,29,.45);z-index:60;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div onClick="{{ eatClick }}" class="card elev-lg" style="width:min(520px,100%);max-height:88vh;overflow:auto;gap:16px;padding:28px 30px">
+        <div style="display:flex;align-items:center;gap:18px">
+          {{ amEl }}
+          <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+            <div style="font-family:var(--font-heading);font-size:26px;line-height:1">{{ amName }}</div>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+              <span class="tag tag-accent-2">{{ amOcc }}</span>
+              <span class="tag tag-outline">{{ amDept }}</span>
+            </div>
+            <div style="font-size:12.5px;color:var(--color-neutral-700);font-style:italic">“{{ amTagline }}”</div>
+          </div>
+          <button onClick="{{ closeAgent }}" class="btn btn-icon btn-ghost" style="margin-left:auto;align-self:flex-start;border-radius:999px">✕</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700)">Personality</div>
+          <div style="font-size:13.5px;line-height:1.55;color:var(--color-neutral-900)">{{ amPersonality }}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700)">Instructions — system prompt</div>
+          <pre style="margin:0;background:var(--color-neutral-900);color:var(--color-neutral-200);border-radius:var(--radius-lg);padding:14px 16px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.6;white-space:pre-wrap">{{ amPrompt }}</pre>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700)">Skills</div>
+            <a href="Skills Admin.dc.html" style="font-size:11.5px;font-weight:600">open master skill library ↗</a>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ amSkills }}" as="s" hint-placeholder-count="3">
+              <a href="Skills Admin.dc.html" title="View in the master skill library" style="font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:6px 13px;border-radius:999px;border:1.5px solid var(--color-accent-300);background:var(--color-accent-100);color:var(--color-accent-800);text-decoration:none;display:flex;align-items:center;gap:6px" style-hover="background:var(--color-accent-200)">{{ s.t }}<span style="font-size:9px">↗</span></a>
+            </sc-for>
+          </div>
+          <div style="font-size:11px;color:var(--color-neutral-600)">Each skill maps to an entry in the master library — one tool definition, one desk animation, maintained in one place.</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ viewBuilder }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;overflow:auto;padding:8px 32px 48px">
+      <div style="max-width:980px;margin:0 auto">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px">
+          <h2 style="margin:0;font-family:var(--font-heading);font-weight:400;font-size:30px">The Workshop</h2>
+          <span style="font-size:13.5px;color:var(--color-neutral-600)">The look is a costume. The skills and the prompt are the employee.</span>
+        </div>
+        <div style="display:grid;grid-template-columns:320px 1fr;gap:22px;align-items:start">
+          <div class="card" style="align-items:center;gap:12px;padding:26px 20px;position:sticky;top:8px">
+            {{ previewEl }}
+            <div style="font-family:var(--font-heading);font-size:20px;min-height:24px">{{ bName }}</div>
+            <div style="display:flex;gap:6px">
+              <sc-for list="{{ previewStates }}" as="ps" hint-placeholder-count="3">
+                <button class="{{ ps.cls }}" onClick="{{ ps.pick }}" style="border-radius:999px;font-size:11.5px;padding:5px 12px">{{ ps.label }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:11px;color:var(--color-neutral-600);text-align:center">Preview the three honest states — this is exactly what you’ll see on the floor.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <div class="field"><label>Name</label>
+                <input class="input" value="{{ bNameRaw }}" onChange="{{ setName }}" placeholder="e.g. Gadget" style="border-radius:999px">
+              </div>
+              <div class="field"><label>Occupation</label>
+                <input class="input" value="{{ bOcc }}" onChange="{{ setOcc }}" placeholder="e.g. Growth hacker" style="border-radius:999px">
+              </div>
+            </div>
+            <div class="field"><label>Tagline — one-liner for their card</label>
+              <input class="input" value="{{ bTagline }}" onChange="{{ setTagline }}" placeholder="e.g. Ships first, apologizes never." style="border-radius:999px">
+            </div>
+            <div class="field"><label>Personality</label>
+              <textarea class="input" value="{{ bPersonality }}" onChange="{{ setPersonality }}" rows="2" placeholder="Temperament, quirks, how they behave on the floor and in handoffs." style="border-radius:var(--radius-lg);resize:vertical;font-size:13.5px;line-height:1.55"></textarea>
+            </div>
+            <div class="field"><label>Hue</label>
+              <div style="display:flex;gap:9px;flex-wrap:wrap">
+                <sc-for list="{{ hues }}" as="h" hint-placeholder-count="8">
+                  <button onClick="{{ h.pick }}" title="{{ h.name }}" style="width:34px;height:34px;border-radius:50%;background:{{ h.bg }};border:none;cursor:pointer;outline:{{ h.ring }};outline-offset:2px"></button>
+                </sc-for>
+              </div>
+            </div>
+            <div class="field"><label>Headgear</label>
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <sc-for list="{{ gears }}" as="g" hint-placeholder-count="6">
+                  <button class="{{ g.cls }}" onClick="{{ g.pick }}" style="border-radius:999px;font-size:12.5px;padding:6px 14px">{{ g.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div class="field"><label>Prop</label>
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <sc-for list="{{ props }}" as="g" hint-placeholder-count="9">
+                  <button class="{{ g.cls }}" onClick="{{ g.pick }}" style="border-radius:999px;font-size:12.5px;padding:6px 14px">{{ g.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div class="field"><label>Resting face</label>
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <sc-for list="{{ exprs }}" as="g" hint-placeholder-count="4">
+                  <button class="{{ g.cls }}" onClick="{{ g.pick }}" style="border-radius:999px;font-size:12.5px;padding:6px 14px">{{ g.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div class="field"><label>Skills — each one maps to a real tool and a desk animation · <a href="Skills Admin.dc.html" style="font-weight:600">master skill library ↗</a></label>
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <sc-for list="{{ skillOpts }}" as="s" hint-placeholder-count="12">
+                  <div style="position:relative" onMouseEnter="{{ s.over }}" onMouseLeave="{{ s.out }}">
+                    <button onClick="{{ s.pick }}" style="font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:6px 13px;border-radius:999px;cursor:pointer;border:1.5px solid {{ s.bc }};background:{{ s.bg }};color:{{ s.fg }}">{{ s.t }}</button>
+                    <sc-if value="{{ s.tipOn }}" hint-placeholder-val="{{ false }}">
+                      <div style="position:absolute;bottom:calc(100% + 9px);left:{{ s.tipLeft }};right:{{ s.tipRight }};width:270px;z-index:40;background:var(--color-neutral-100);border:1.5px solid var(--color-divider);border-radius:14px;box-shadow:var(--shadow-md);padding:12px 15px;display:flex;flex-direction:column;gap:6px;pointer-events:none;animation:cub-pop .25s cubic-bezier(.34,1.56,.64,1) both">
+                        <div style="display:flex;align-items:baseline;gap:8px">
+                          <span style="font-weight:700;font-size:12.5px;color:var(--color-text)">{{ s.tipTitle }}</span>
+                          <span class="tag tag-accent-2" style="flex:none">{{ s.tipCat }}</span>
+                        </div>
+                        <div style="font-size:11.5px;line-height:1.5;color:var(--color-neutral-700)">{{ s.tipBody }}</div>
+                        <div style="font-size:10px;color:var(--color-neutral-500)">from the master skill library</div>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div class="field"><label>The brain — system prompt</label>
+              <textarea class="input" value="{{ bPrompt }}" onChange="{{ setPrompt }}" rows="4" placeholder="You are… Diagnose before you touch. Narrate briefly as you work. Report every failure." style="border-radius:calc(var(--radius-lg));resize:vertical;font-size:13.5px;line-height:1.55"></textarea>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button class="btn btn-ghost" onClick="{{ goHall }}" style="border-radius:999px">Never mind</button>
+              <button class="btn btn-primary" onClick="{{ hireCustom }}" style="border-radius:999px;padding:10px 26px">Hire {{ bName }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  ROSTER = [
+    ['ratchet','Ratchet','Fixer',24,'hardhat','wrench','happy',['shell','file_edit'],'Percussive maintenance, but polite.'],
+    ['peek','Peek','Researcher',176,'cap','magnifier','focused',['web_search','fetch'],'Reads the footnotes so you don\u2019t have to.'],
+    ['scribbles','Scribbles','Copywriter',315,'beret','pencil','happy',['write','critique'],'Three drafts in a trenchcoat.'],
+    ['ledger','Ledger','Accountant',226,'none','calculator','focused',['spreadsheets','math'],'Will pivot tables for food.'],
+    ['beaker','Beaker','Scientist',95,'antenna','flask','worried',['code_run','experiments'],'60% of the time, it works every time.'],
+    ['java','Java','Ops engineer',9,'headset','coffee','sleepy',['monitor','schedule'],'Runs on caffeine and cron.'],
+    ['holler','Holler','Marketer',46,'none','megaphone','happy',['write','email'],'Contractually obligated to say synergy.'],
+    ['tally','Tally','Project manager',135,'none','clipboard','focused',['plan','summarize'],'Turns chaos into checkboxes.'],
+    ['digit','Digit','Data analyst',226,'cap','calculator','focused',['data_viz','spreadsheets'],'Charts first, questions later.'],
+    ['quill','Quill','Editor',24,'beret','pencil','focused',['critique','summarize'],'Kills your darlings humanely.'],
+    ['scout','Scout','Fact-checker',135,'cap','magnifier','worried',['web_search','critique'],'Trust, but verify. Mostly verify.'],
+    ['patch','Patch','Debugger',9,'hardhat','wrench','focused',['shell','code_run'],'It\u2019s always DNS. Except when it isn\u2019t.'],
+    ['brew','Brew','Support rep',176,'headset','coffee','happy',['email','summarize'],'Have you tried turning it off?'],
+    ['blurb','Blurb','Social media',315,'antenna','megaphone','happy',['write','post'],'Speaks fluent trending.'],
+    ['fizz','Fizz','Prototyper',46,'antenna','flask','happy',['code_run','file_edit'],'Ships it, then reads the manual.'],
+    ['docket','Docket','Paralegal',24,'none','clipboard','focused',['fetch','summarize'],'Reads the fine print for sport.'],
+    ['sum','Sum','Bookkeeper',95,'none','calculator','sleepy',['spreadsheets','email'],'Balances books and grudges.'],
+    ['gab','Gab','Translator',176,'beret','pencil','happy',['translate','write'],'Fluent in twelve apologies.'],
+    ['probe','Probe','QA tester',315,'hardhat','magnifier','worried',['code_run','critique'],'Breaks it so you don\u2019t have to.'],
+    ['pager','Pager','On-call',135,'headset','wrench','sleepy',['monitor','shell'],'Sleeps with one eye on the dashboard.'],
+  ];
+  SKILLS_FALLBACK = ['web_search','fetch','write','critique','code_run','shell','file_edit','spreadsheets','data_viz','monitor','schedule','translate','summarize','email','plan','post'];
+  // shared with Skills Admin.dc.html — same localStorage store
+  SKILLS = this.loadSkills();
+  loadSkills() {
+    try {
+      const s = JSON.parse(localStorage.getItem('cubicleSkillsAdminV1'));
+      if (Array.isArray(s) && s.length) { this.SKILL_DEFS = s; return s.map((k) => k.name); }
+    } catch (e) {}
+    this.SKILL_DEFS = null;
+    return this.SKILLS_FALLBACK;
+  }
+
+  state = {
+    brief: '', view: 'splash', phase: 'pace', xs: [], flips: [], q: '', agent: null, hoverSkill: null,
+    hired: ['ratchet','peek','scribbles','ledger','beaker'],
+    customs: [],
+    b: { name: '', occ: '', tagline: '', personality: '', hue: 46, gear: 'none', prop: 'wrench', expr: 'happy', skills: [], prompt: '', preview: 'idle' },
+  };
+
+  ORG = [
+    ['Research', 'find the markets', [['Market intel', 5], ['User insights', 4]]],
+    ['Engineering', 'build the thing', [['Platform', 5], ['Prototypes', 4], ['QA', 4]]],
+    ['Finance', 'fund the thing', [['Modeling', 4], ['Books', 3]]],
+    ['Marketing', 'make it loud', [['Campaigns', 5], ['Content', 4], ['Social', 3]]],
+    ['Operations', 'keep it running', [['Logistics', 4], ['Support', 4]]],
+    ['Legal', 'keep it legal', [['Contracts', 3], ['Compliance', 3]]],
+  ];
+  NAMES = 'Bolt,Fern,Pip,Mox,Tilda,Gus,Nova,Rye,Sable,Twig,Juno,Ozzy,Wren,Bix,Clem,Dot,Ez,Flo,Gil,Hux,Ivy,Jax,Kit,Lux,Moe,Nib,Oat,Pom,Quip,Rud,Sox,Tam,Umi,Vee,Wilt,Xan,Yam,Zeb,Ash,Birch,Cove,Dune,Elm,Fog,Gale,Hail,Iris,Jute,Kelp,Loam,Mist,Nook,Onyx,Pine,Quartz,Reed'.split(',');
+  TOOLS = { working: ['web_search', 'fetch', 'write', 'code_run', 'shell', 'spreadsheets', 'summarize', 'data_viz', 'email', 'translate'], idle: ['awaiting task'], fumble: ['retrying\u2026', 'tool error', 'rate limited'] };
+
+  async componentDidMount() {
+    this._alive = true;
+    this.M = await import(new URL('./mascot.js', document.baseURI).href);
+    if (location.hash === '#company') this.setState({ view: 'org' });
+    this.setState({ xs: this.homes(), flips: this.homes().map(() => 1) });
+    this.loop();
+    this._org = setInterval(() => {
+      if (this.state.view !== 'org' || !this.orgAgents) return;
+      for (let k = 0; k < 9; k++) {
+        const a = this.orgAgents[Math.floor(Math.random() * this.orgAgents.length)];
+        const r = Math.random();
+        a.s = r < 0.68 ? 'working' : r < 0.9 ? 'idle' : 'fumble';
+        const pool = this.TOOLS[a.s];
+        a.cap = a.s === 'working' ? pool[Math.floor(Math.random() * pool.length)] : pool[Math.floor(Math.random() * pool.length)];
+      }
+      this.forceUpdate();
+    }, 1400);
+  }
+  componentWillUnmount() { this._alive = false; clearTimeout(this._t); clearInterval(this._org); }
+  sleep(ms) { return new Promise((r) => { this._t = setTimeout(r, ms); }); }
+
+  all() { return [...this.ROSTER, ...this.state.customs]; }
+  hiredDefs() { const a = this.all(); return this.state.hired.map((id) => a.find((r) => r[0] === id)).filter(Boolean); }
+  homes() { const n = this.hiredDefs().length; if (n === 0) return []; if (n === 1) return [50]; return Array.from({ length: n }, (_, i) => 10 + (80 * i) / (n - 1)); }
+  lead() { return Math.floor(this.hiredDefs().length / 2); }
+
+  retarget() {
+    const h = this.homes();
+    const xs = h.map((x) => x + (Math.random() * 14 - 7));
+    const flips = xs.map((x, i) => (x < (this.state.xs[i] ?? x) ? -1 : 1));
+    this.setState({ xs, flips });
+  }
+
+  async loop() {
+    while (this._alive) {
+      this.setState({ phase: 'pace' });
+      for (let i = 0; i < 4 && this._alive; i++) { this.retarget(); await this.sleep(2000); }
+      if (!this._alive) break;
+      const n = this.hiredDefs().length;
+      if (n < 2) { await this.sleep(1200); continue; }
+      const L = this.lead();
+      this.setState({ phase: 'idea' });
+      await this.sleep(1800);
+      const lx = this.state.xs[L] ?? 50;
+      this.setState({
+        phase: 'huddle',
+        xs: this.homes().map((_, i) => (i === L ? lx : lx + (i - L) * 7)),
+        flips: this.homes().map((_, i) => (i < L ? 1 : i > L ? -1 : 1)),
+      });
+      await this.sleep(2400);
+      this.setState({ phase: 'talk' });
+      await this.sleep(2600);
+      this.setState({ phase: 'work', xs: this.homes(), flips: this.homes().map((_, i) => (i % 3 === 1 ? -1 : 1)) });
+      await this.sleep(9500);
+      this.setState({ phase: 'wrap' });
+      await this.sleep(1400);
+      this.setState({ xs: this.homes() });
+      await this.sleep(1800);
+    }
+  }
+
+  bubble(inner, key) {
+    return React.createElement('div', {
+      key,
+      style: { position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: '2px', background: '#f9f4ed', border: '1.5px solid #d8cdbb', borderRadius: '14px', padding: '7px 11px', boxShadow: '0 3px 8px rgba(46,43,37,.10)', animation: 'cub-pop .4s cubic-bezier(.34,1.56,.64,1) both', whiteSpace: 'nowrap', lineHeight: 1 },
+    }, inner, React.createElement('div', { style: { position: 'absolute', top: '100%', left: '50%', width: '10px', height: '10px', background: '#f9f4ed', borderRight: '1.5px solid #d8cdbb', borderBottom: '1.5px solid #d8cdbb', transform: 'translate(-50%,-56%) rotate(45deg)' } }));
+  }
+
+  mEl(opts, size) {
+    if (!this.M) return null;
+    return React.createElement('div', { style: { width: size + 'px', lineHeight: 0, flex: 'none' }, dangerouslySetInnerHTML: { __html: this.M.mascotSVG({ ...opts, styleDir: 'a', size }) } });
+  }
+
+  STATION_BY_PROP = {
+    wrench: ['typing\u2026','<svg width="46" viewBox="0 0 48 36"><rect x="9" y="2" width="30" height="21" rx="3" fill="#474238"/><rect x="12" y="5" width="24" height="15" rx="1.5" fill="#9fb08a"/><path d="M5 27 h38 l-4 6 H9 z" fill="#82796a"/></svg>'],
+    coffee: ['typing\u2026','<svg width="46" viewBox="0 0 48 36"><rect x="9" y="2" width="30" height="21" rx="3" fill="#474238"/><rect x="12" y="5" width="24" height="15" rx="1.5" fill="#9fb08a"/><path d="M5 27 h38 l-4 6 H9 z" fill="#82796a"/></svg>'],
+    magnifier: ['reading\u2026','<svg width="44" viewBox="0 0 48 30"><path d="M4 7 Q14 1 24 7 V26 Q14 20 4 26 Z" fill="#f9f4ed" stroke="#a19786" stroke-width="2"/><path d="M44 7 Q34 1 24 7 V26 Q34 20 44 26 Z" fill="#f9f4ed" stroke="#a19786" stroke-width="2"/><path d="M8 11 q8 -4 13 0 M8 16 q8 -4 13 0" stroke="#c0b6a5" stroke-width="1.8" fill="none"/></svg>'],
+    pencil: ['drafting\u2026','<svg width="38" viewBox="0 0 40 32"><rect x="4" y="4" width="30" height="24" rx="3" fill="#f9f4ed" stroke="#a19786" stroke-width="2" transform="rotate(-4 19 16)"/><path d="M10 12 h18 M10 17 h18 M10 22 h11" stroke="#c0b6a5" stroke-width="2" stroke-linecap="round" transform="rotate(-4 19 16)"/></svg>'],
+    calculator: ['crunching\u2026','<svg width="34" viewBox="0 0 36 34"><rect x="5" y="2" width="26" height="30" rx="3" fill="#f9f4ed" stroke="#a19786" stroke-width="2"/><path d="M10 9 h16 M10 15 h16 M10 21 h16 M10 27 h9" stroke="#c67139" stroke-width="2" stroke-linecap="round"/></svg>'],
+    flask: ['testing\u2026','<svg width="36" viewBox="0 0 40 36"><rect x="8" y="26" width="24" height="4" rx="2" fill="#82796a"/><path d="M20 26 q-7 -6 0 -14 q7 8 0 14" fill="#e8935a"/><path d="M20 24 q-3.5 -3 0 -7 q3.5 4 0 7" fill="#f2c14e"/></svg>'],
+    megaphone: ['on a call\u2026','<svg width="30" viewBox="0 0 32 32"><rect x="6" y="3" width="20" height="26" rx="5" fill="#474238"/><rect x="9" y="7" width="14" height="15" rx="2" fill="#9fb08a"/><circle cx="16" cy="25.5" r="1.8" fill="#f9f4ed"/></svg>'],
+    clipboard: ['planning\u2026','<svg width="34" viewBox="0 0 36 34"><rect x="5" y="2" width="26" height="30" rx="3" fill="#f9f4ed" stroke="#a19786" stroke-width="2"/><path d="M10 10 l2.5 2.5 L17 8 M10 19 l2.5 2.5 L17 17" stroke="#7a8a5e" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M20 11 h7 M20 20 h7" stroke="#c0b6a5" stroke-width="2" stroke-linecap="round"/></svg>'],
+    none: ['helping\u2026','<svg width="34" viewBox="0 0 36 34"><rect x="5" y="2" width="26" height="30" rx="3" fill="#f9f4ed" stroke="#a19786" stroke-width="2"/><path d="M10 9 h16 M10 15 h16 M10 21 h10" stroke="#c0b6a5" stroke-width="2" stroke-linecap="round"/></svg>'],
+  };
+
+  crewVals() {
+    const { phase, xs, flips } = this.state;
+    const defs = this.hiredDefs();
+    const L = this.lead();
+    const walking = phase === 'pace' || phase === 'huddle' || phase === 'work' || phase === 'wrap';
+    return defs.map((d, i) => {
+      const [, name, , hue, gear, prop, expr] = d;
+      const size = 112 + ((i * 7) % 18);
+      let el = null;
+      if (this.M) {
+        const working = phase === 'work';
+        const mState = working ? 'working' : 'idle';
+        let bub = null;
+        if (phase === 'idea' && i === L) {
+          bub = this.bubble(React.createElement('div', { dangerouslySetInnerHTML: { __html: '<svg width="26" viewBox="0 0 32 32" style="display:block"><circle cx="16" cy="13" r="8.5" fill="#f2c14e" stroke="#b2622d" stroke-width="2"/><rect x="12" y="21" width="8" height="5" rx="2" fill="#82796a"/><path d="M16 1 v3 M27 6 l-2.4 2.4 M5 6 l2.4 2.4 M30 15 h-3 M2 15 h3" stroke="#b2622d" stroke-width="2" stroke-linecap="round"/></svg>' } }), 'idea');
+        } else if (phase === 'talk' && i === L) {
+          bub = this.bubble(React.createElement('span', { style: { fontFamily: 'Figtree, sans-serif', fontSize: '12.5px', fontWeight: 600, color: '#2e2b25' } }, 'Crew! Got a job for us!'), 'talk');
+        } else if (phase === 'talk' && i !== L) {
+          bub = this.bubble(React.createElement('span', { style: { fontFamily: 'Figtree, sans-serif', fontSize: '12.5px', fontWeight: 700, color: '#c67139' } }, '!'), 'ex');
+        }
+        const st = this.STATION_BY_PROP[prop] || this.STATION_BY_PROP.none;
+        // caption above the head, glyph tucked at the feet — both stay inside the mascot's own column so neighbors never collide
+        const caption = React.createElement('div', {
+          style: { position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: '4px', fontFamily: 'Figtree, sans-serif', fontSize: '11px', color: '#8b8172', whiteSpace: 'nowrap', lineHeight: 1, opacity: working ? 1 : 0, transition: 'opacity .6s 1s' },
+        }, st[0]);
+        const station = React.createElement('div', {
+          style: { position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%) translateX(' + ((flips[i] || 1) * 16) + 'px) scale(.82)', transformOrigin: 'bottom center', opacity: working ? 1 : 0, transition: 'opacity .6s .8s', lineHeight: 0, zIndex: 2 },
+          dangerouslySetInnerHTML: { __html: st[1] },
+        });
+        el = React.createElement('div', {
+          key: d[0],
+          style: {
+            position: 'relative', width: size + 'px', lineHeight: 0, flex: 'none',
+            animation: phase === 'idea' && i === L ? 'cub-hop .55s ease-in-out 2' : walking && !working ? 'cub-step .48s ease-in-out infinite' : 'none',
+          },
+        },
+          bub, caption,
+          React.createElement('div', { style: { transform: 'scaleX(' + (flips[i] || 1) + ')', transformOrigin: '50% 100%', transition: 'transform .4s' }, dangerouslySetInnerHTML: { __html: this.M.mascotSVG({ hue, gear, prop, expr: working ? 'focused' : expr, styleDir: 'a', state: mState, size }) } }),
+          station
+        );
+      }
+      return { x: xs[i] ?? 50, el };
+    });
+  }
+
+  renderVals() {
+    const { view, hired, b } = this.state;
+    const pill = (on) => on ? 'btn btn-primary' : 'btn btn-secondary';
+    const M = this.M ? this.M : null;
+
+    const q = this.state.q.trim().toLowerCase();
+    const match = (d) => {
+      if (!q) return true;
+      const [, name, occ, , , , , skills, tagline] = d;
+      const words = q.split(/\s+/).filter(Boolean);
+      return skills.some((s) => s.toLowerCase().includes(q) || words.some((w) => s.toLowerCase().includes(w))) || name.toLowerCase().includes(q) || occ.toLowerCase().includes(q) || tagline.toLowerCase().includes(q);
+    };
+    const filtered = this.all().filter(match);
+    const roster = filtered.map((d) => {
+      const [id, name, occ, hue, gear, prop, expr, skills, tagline, cPersonality, cPrompt] = d;
+      const isHired = hired.includes(id);
+      return {
+        name, occ, tagline,
+        el: this.mEl({ hue, gear, prop, expr }, 92),
+        skills: skills.map((t) => ({ t })),
+        open: () => this.setState({ agent: {
+          name, occ, dept: 'The Cubicle roster', tagline, skills,
+          look: { hue, gear, prop, expr },
+          personality: cPersonality || tagline + ' ' + (expr === 'focused' ? 'Methodical and quietly competitive \u2014 double-checks everything twice, celebrates with a single nod.' : expr === 'worried' ? 'Anxious in a useful way: assumes everything can fail, so nothing surprising ever does.' : expr === 'sleepy' ? 'Unbothered and steady. Slow to start, impossible to stop.' : 'Upbeat and chatty \u2014 narrates the work, keeps team morale suspiciously high.'),
+          prompt: cPrompt || 'You are ' + name + ', ' + (('aeiou'.includes(occ[0].toLowerCase())) ? 'an ' : 'a ') + occ.toLowerCase() + ' on the crew.\n\u2022 Diagnose before you touch. Narrate briefly as you work.\n\u2022 Use only your granted tools: ' + skills.join(', ') + '.\n\u2022 Report every failure honestly \u2014 the floor shows what you show.\n\u2022 Hand off to a teammate when a task leaves your lane.',
+        } }),
+        border: isHired ? '1.5px solid var(--color-accent)' : '1.5px solid transparent',
+        btnClass: isHired ? 'btn btn-secondary' : 'btn btn-primary',
+        btnLabel: isHired ? 'On the crew ✓' : 'Hire \u2019em',
+        toggle: () => {
+          const h = isHired ? hired.filter((x) => x !== id) : [...hired, id];
+          this.setState({ hired: h, xs: [], flips: [] }, () => this.setState({ xs: this.homes(), flips: this.homes().map(() => 1) }));
+        },
+      };
+    });
+
+    const hues = (M ? M.HUES : []).map((h) => ({
+      name: h.name, bg: `hsl(${h.h} 48% 58%)`,
+      ring: b.hue === h.h ? '2.5px solid var(--color-text)' : 'none',
+      pick: () => this.setState({ b: { ...b, hue: h.h } }),
+    }));
+    const optRow = (list, key) => (M ? list : []).map((v) => ({
+      label: v === 'none' ? 'none' : v, cls: pill(b[key] === v),
+      pick: () => this.setState({ b: { ...b, [key]: v } }),
+    }));
+    const skillOpts = this.SKILLS.map((t) => {
+      const on = b.skills.includes(t);
+      const def = (this.SKILL_DEFS || []).find((d) => d.name === t);
+      const snippet = def ? (def.instructions || def.systemPrompt || '').trim() : '';
+      return {
+        t,
+        bc: on ? 'var(--color-accent)' : 'var(--color-neutral-400)',
+        bg: on ? 'var(--color-accent-100)' : 'transparent',
+        fg: on ? 'var(--color-accent-800)' : 'var(--color-neutral-700)',
+        pick: () => this.setState({ b: { ...b, skills: on ? b.skills.filter((x) => x !== t) : [...b.skills, t] } }),
+        tipOn: this.state.hoverSkill === t,
+        tipLeft: this.state.hoverFlip ? 'auto' : '0',
+        tipRight: this.state.hoverFlip ? '0' : 'auto',
+        tipTitle: t,
+        tipCat: def && def.category ? def.category : 'skill',
+        tipBody: snippet ? (snippet.length > 150 ? snippet.slice(0, 150) + '\u2026' : snippet) : 'No instructions written yet \u2014 add them in the skill library.',
+        over: (e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          this.setState({ hoverSkill: t, hoverFlip: r.left + 280 > window.innerWidth });
+        },
+        out: () => this.setState({ hoverSkill: null }),
+      };
+    });
+    const previewStates = [['idle', 'Idle'], ['working', 'Working'], ['fumble', 'Fumble']].map(([v, label]) => ({
+      label, cls: pill(b.preview === v),
+      pick: () => this.setState({ b: { ...b, preview: v } }),
+    }));
+
+    // ---- org sample: 55 agents, deterministic looks, simulated live states ----
+    if (!this.orgAgents) {
+      const HUES = [24, 95, 46, 315, 226, 176, 9, 135];
+      const GEARS = ['none', 'hardhat', 'beret', 'headset', 'cap', 'antenna'];
+      const PROPS = ['wrench', 'magnifier', 'pencil', 'calculator', 'clipboard', 'megaphone', 'flask', 'coffee'];
+      this.orgAgents = [];
+      let idx = 0;
+      this.orgTree = this.ORG.map(([name, mission, teams]) => ({
+        name, mission,
+        teams: teams.map(([tName, count]) => ({
+          name: tName,
+          agents: Array.from({ length: count }, () => {
+            const i = idx++;
+            const s = Math.random() < 0.72 ? 'working' : 'idle';
+            const a = {
+              name: this.NAMES[i % this.NAMES.length],
+              hue: HUES[(i * 3) % 8], gear: GEARS[(i * 5) % 6], prop: PROPS[(i * 7) % 8],
+              s, cap: s === 'working' ? this.TOOLS.working[i % this.TOOLS.working.length] : 'awaiting task',
+            };
+            this.orgAgents.push(a);
+            return a;
+          }),
+        })),
+      }));
+    }
+    const capColor = { working: 'var(--color-accent-2-700)', idle: 'var(--color-neutral-500)', fumble: 'var(--color-accent-700)' };
+    const depts = this.orgTree.map((d) => ({
+      name: d.name, mission: d.mission,
+      count: d.teams.reduce((n, t) => n + t.agents.length, 0),
+      teams: d.teams.map((t) => ({
+        name: t.name,
+        agents: t.agents.map((a, ai) => ({
+          name: a.name, cap: a.cap, capColor: capColor[a.s],
+          el: this.mEl({ hue: a.hue, gear: a.gear, prop: a.prop, expr: a.s === 'working' ? 'focused' : a.s === 'fumble' ? 'worried' : 'sleepy', state: a.s }, 54),
+          open: () => {
+            const skills = [this.SKILLS[(ai * 3 + d.name.length) % this.SKILLS.length], this.SKILLS[(ai * 5 + 2) % this.SKILLS.length]];
+            this.setState({ agent: {
+              name: a.name, occ: t.name + ' agent', dept: d.name, skills,
+              tagline: 'Hired into ' + t.name + ' to move the objective.',
+              look: { hue: a.hue, gear: a.gear, prop: a.prop, expr: 'happy' },
+              personality: 'A ' + t.name.toLowerCase() + ' specialist on the ' + d.name + ' floor. Keeps a tidy queue, escalates early, and never pretends to work when idle.',
+              prompt: 'You are ' + a.name + ', an agent on the ' + t.name + ' team in ' + d.name + '.\n\u2022 Work only tasks delegated by your team manager.\n\u2022 Use only your granted tools: ' + skills.join(', ') + '.\n\u2022 Report every failure honestly \u2014 the floor shows what you show.\n\u2022 Hand off upward when blocked; never spin.',
+            } });
+          },
+        })),
+      })),
+    }));
+    const counts = this.orgAgents.reduce((c, a) => (c[a.s]++, c), { working: 0, idle: 0, fumble: 0 });
+
+    return {
+      viewOrg: view === 'org', notOrg: view !== 'org', notHall: view !== 'hall',
+      navHomeCls: view === 'splash' ? 'btn btn-secondary' : 'btn btn-ghost',
+      navCoCls: view !== 'splash' ? 'btn btn-secondary' : 'btn btn-ghost',
+      goOrg: () => this.setState({ view: 'org' }),
+      depts, agentTotal: this.orgAgents.length,
+      nWorking: counts.working, nIdle: counts.idle, nFumble: counts.fumble,
+      ceoEl: this.mEl({ hue: 46, gear: 'none', prop: 'megaphone', expr: 'focused', state: 'working' }, 96),
+      q: this.state.q,
+      onQ: (e) => this.setState({ q: e.target.value }),
+      hallSub: q
+        ? filtered.length + ' of ' + this.all().length + ' can do \u201c' + q + '\u201d'
+        : this.all().length + ' specialists, no benefits required. Tap to add them to your crew.',
+      skillFilters: this.SKILLS.map((t) => {
+        const on = q === t;
+        return {
+          t,
+          bc: on ? 'var(--color-accent)' : 'var(--color-neutral-400)',
+          bg: on ? 'var(--color-accent-100)' : 'transparent',
+          fg: on ? 'var(--color-accent-800)' : 'var(--color-neutral-700)',
+          pick: () => this.setState({ q: on ? '' : t }),
+        };
+      }),
+      viewSplash: view === 'splash', viewHall: view === 'hall', viewBuilder: view === 'builder',
+      notSplash: view !== 'splash',
+      hiredCount: hired.length,
+      agentOpen: !!this.state.agent,
+      amName: this.state.agent ? this.state.agent.name : '',
+      amOcc: this.state.agent ? this.state.agent.occ : '',
+      amDept: this.state.agent ? this.state.agent.dept : '',
+      amTagline: this.state.agent ? this.state.agent.tagline : '',
+      amPersonality: this.state.agent ? this.state.agent.personality : '',
+      amPrompt: this.state.agent ? this.state.agent.prompt : '',
+      amSkills: this.state.agent ? this.state.agent.skills.map((t) => ({ t })) : [],
+      amEl: this.state.agent ? this.mEl({ ...this.state.agent.look }, 110) : null,
+      closeAgent: () => this.setState({ agent: null }),
+      eatClick: (e) => e.stopPropagation(),
+      goSplash: () => this.setState({ view: 'splash' }),
+      goHall: () => this.setState({ view: 'hall' }),
+      goBuilder: () => this.setState({ view: 'builder' }),
+      brief: this.state.brief,
+      onBrief: (e) => this.setState({ brief: e.target.value }),
+      clockIn: () => {},
+      crew: this.crewVals(),
+      roster,
+      ghostEl: this.mEl({ hue: 40, gear: 'none', prop: 'none', expr: 'happy' }, 76),
+      hues, gears: optRow(M ? M.GEAR : [], 'gear'), props: optRow(M ? M.PROPS : [], 'prop'), exprs: optRow(M ? M.EXPRESSIONS : [], 'expr'),
+      skillOpts, previewStates,
+      previewEl: this.mEl({ hue: b.hue, gear: b.gear, prop: b.prop, expr: b.expr, state: b.preview }, 170),
+      bName: b.name || 'Newbie', bNameRaw: b.name, bPrompt: b.prompt,
+      bOcc: b.occ, bTagline: b.tagline, bPersonality: b.personality,
+      setName: (e) => this.setState({ b: { ...b, name: e.target.value } }),
+      setPrompt: (e) => this.setState({ b: { ...b, prompt: e.target.value } }),
+      setOcc: (e) => this.setState({ b: { ...b, occ: e.target.value } }),
+      setTagline: (e) => this.setState({ b: { ...b, tagline: e.target.value } }),
+      setPersonality: (e) => this.setState({ b: { ...b, personality: e.target.value } }),
+      hireCustom: () => {
+        const id = 'custom-' + Date.now();
+        const def = [id, b.name || 'Newbie', b.occ || 'Custom hire', b.hue, b.gear, b.prop, b.expr, b.skills.length ? b.skills : ['write'], b.tagline || 'Fresh off the workshop bench.', b.personality, b.prompt];
+        this.setState({
+          customs: [...this.state.customs, def],
+          hired: [...hired, id],
+          view: 'hall',
+          b: { name: '', hue: 46, gear: 'none', prop: 'wrench', expr: 'happy', skills: [], prompt: '', preview: 'idle' },
+        }, () => this.setState({ xs: this.homes(), flips: this.homes().map(() => 1) }));
+      },
+    };
+  }
+}
+
+</script>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#f5ead8"/><circle cx="50" cy="44" r="16" fill="#c67139"/><circle cx="44" cy="42" r="2.6" fill="#201e1d"/><circle cx="56" cy="42" r="2.6" fill="#201e1d"/><path d="M44 49 q6 5 12 0" stroke="#201e1d" stroke-width="2" fill="none" stroke-linecap="round"/><text x="50" y="78" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#7a8a5e" font-weight="bold">The Cubicle</text></svg>
+</template>
+</body>
+</html>

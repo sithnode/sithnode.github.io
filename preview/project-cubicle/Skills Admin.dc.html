@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/styles.css">
+<script src="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);font-family:var(--font-body)}
+a{color:var(--color-accent)} a:hover{color:var(--color-accent-600)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:16px;padding:18px 32px;flex-wrap:wrap">
+    <a href="Splash.dc.html" style="text-decoration:none"><span style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">The Cubicle</span></a>
+    <span style="font-size:13px;color:var(--color-neutral-600)">Skills Admin · skills can include other skills — agents inherit the whole stack</span>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <span class="tag tag-accent-2">{{ nSkills }}&nbsp;skills</span>
+      <span class="tag tag-neutral">{{ nEdges }}&nbsp;inheritance links</span>
+      <div style="display:flex;align-items:center;gap:4px">
+        <a href="Splash.dc.html" class="btn btn-ghost" style="border-radius:999px;font-size:13px;padding:7px 16px;text-decoration:none">Home</a>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <a href="Office Arcade.dc.html" class="btn btn-ghost" style="border-radius:999px;font-size:13px;padding:7px 16px;text-decoration:none">The Floor</a>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <span class="btn btn-secondary" style="border-radius:999px;font-size:13px;padding:7px 16px">Skills</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;padding:8px 32px 48px;max-width:1440px;width:100%;margin:0 auto;box-sizing:border-box">
+
+    <!-- Skill library -->
+    <div style="flex:none;width:310px;display:flex;flex-direction:column;gap:10px;position:sticky;top:8px;max-height:calc(100vh - 24px)">
+      <div style="display:flex;align-items:center;gap:10px;padding:2px 4px">
+        <span style="font-family:var(--font-heading);font-size:18px;color:var(--color-text)">Skill library</span>
+        <button class="btn btn-primary" style="margin-left:auto" onClick="{{ onNew }}">+ New skill</button>
+      </div>
+      <input class="input" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search {{ nSkills }} skills…">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;padding:0 2px">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+          <button onClick="{{ f.onPick }}" style="all:unset;cursor:pointer;font-family:var(--font-body);font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:{{ f.bg }};color:{{ f.color }};border:1px solid {{ f.border }}" style-hover="border-color:var(--color-accent-300)">{{ f.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:0 4px;font-size:11.5px;color:var(--color-neutral-600)">
+        <span>{{ resultMeta }}</span>
+        <button onClick="{{ onToggleSort }}" style="all:unset;cursor:pointer;margin-left:auto;font-weight:600;color:var(--color-accent-700)" style-hover="color:var(--color-accent)">{{ sortLabel }}</button>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:2px 4px 8px 2px">
+        <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-2-700);padding:2px 6px;position:sticky;top:0;background:var(--color-bg);border-radius:6px">{{ g.label }}</div>
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+              <div onClick="{{ r.onSelect }}" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:{{ r.bg }};border:1.5px solid {{ r.border }};box-shadow:{{ r.shadow }}" style-hover="border-color:var(--color-accent-300)">
+                <span style="flex:none;width:10px;height:10px;border-radius:50%;background:{{ r.dot }}"></span>
+                <span style="font-weight:700;font-size:13px;color:var(--color-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</span>
+                <sc-if value="{{ r.hasTags }}" hint-placeholder-val="{{ false }}">
+                  <span style="flex:none;font-size:10px;color:var(--color-neutral-600);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px">{{ r.tagTxt }}</span>
+                </sc-if>
+                <sc-if value="{{ r.hasSubs }}" hint-placeholder-val="{{ false }}">
+                  <span class="tag tag-accent-2" style="margin-left:auto;flex:none">{{ r.subCount }}</span>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+          <p style="font-size:12px;color:var(--color-neutral-600);padding:8px 6px;margin:0">No skills match “{{ query }}”.</p>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- Editor -->
+    <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ true }}">
+    <div class="card" style="flex:1;min-width:420px;padding:28px 30px;border-radius:calc(var(--radius-lg) * 1.3);display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+        <span style="font-family:var(--font-heading);font-size:24px;color:var(--color-text)">{{ fName }}</span>
+        <span style="font-size:12px;color:var(--color-neutral-600)">{{ selMeta }}</span>
+        <sc-if value="{{ hasParents }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:12px;color:var(--color-neutral-600)">· used by
+            <sc-for list="{{ parents }}" as="p">
+              <button onClick="{{ p.onGo }}" style="all:unset;cursor:pointer;font-weight:600;color:var(--color-accent-700);margin-left:4px" style-hover="color:var(--color-accent)">{{ p.name }}</button>
+            </sc-for>
+          </span>
+        </sc-if>
+        <sc-if value="{{ allowDelete }}" hint-placeholder-val="{{ true }}">
+          <button class="btn btn-ghost" style="margin-left:auto;color:var(--color-accent-700)" onClick="{{ onDelete }}">Delete skill</button>
+        </sc-if>
+      </div>
+
+      <div class="field">
+        <label>Name</label>
+        <input class="input" value="{{ fName }}" onChange="{{ onName }}" placeholder="e.g. Deep Research">
+      </div>
+
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div class="field" style="flex:1;min-width:200px">
+          <label>Category</label>
+          <input class="input" list="cub-cat-list" value="{{ fCategory }}" onChange="{{ onCategory }}" placeholder="e.g. Research">
+          <datalist id="cub-cat-list">
+            <sc-for list="{{ catOptions }}" as="c"><option value="{{ c }}"></option></sc-for>
+          </datalist>
+        </div>
+        <div class="field" style="flex:2;min-width:260px">
+          <label>Tags</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+            <sc-for list="{{ tagChips }}" as="t" hint-placeholder-count="2">
+              <span class="tag tag-accent-2" style="display:inline-flex;align-items:center;gap:6px">{{ t.name }}<button onClick="{{ t.onRemove }}" style="all:unset;cursor:pointer;font-weight:700;padding:0 2px">×</button></span>
+            </sc-for>
+            <input class="input" list="cub-tag-list" style="width:150px" value="{{ tagVal }}" onChange="{{ onTagVal }}" onKeyDown="{{ onTagKey }}" placeholder="add tag ⏎">
+            <datalist id="cub-tag-list">
+              <sc-for list="{{ tagOptions }}" as="t"><option value="{{ t }}"></option></sc-for>
+            </datalist>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>System prompt</label>
+        <textarea class="input" style="min-height:120px;border-radius:var(--radius-lg);resize:vertical;line-height:1.55" value="{{ fPrompt }}" onChange="{{ onPrompt }}" placeholder="Who the agent is when this skill is active — voice, role, boundaries."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Instructions</label>
+        <textarea class="input" style="min-height:100px;border-radius:var(--radius-lg);resize:vertical;line-height:1.55" value="{{ fInstructions }}" onChange="{{ onInstructions }}" placeholder="Step-by-step guidance: how to do the work, what good output looks like."></textarea>
+      </div>
+
+      <div class="field">
+        <label>Knowledge attachments</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <sc-for list="{{ attachments }}" as="f" hint-placeholder-count="2">
+            <span class="tag tag-neutral" style="display:inline-flex;align-items:center;gap:6px">{{ f.name }}<button onClick="{{ f.onRemove }}" style="all:unset;cursor:pointer;font-weight:700;color:var(--color-neutral-600);padding:0 2px">×</button></span>
+          </sc-for>
+          <label class="btn btn-secondary" style="cursor:pointer">Attach files<input type="file" multiple style="display:none" onChange="{{ onAttach }}"></label>
+        </div>
+        <sc-if value="{{ noAttachments }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:6px 0 0;font-size:12px;color:var(--color-neutral-600)">No attachments yet — rubrics, cheat sheets, style guides.</p>
+        </sc-if>
+      </div>
+
+      <div class="field">
+        <label>Reference links</label>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ links }}" as="l" hint-placeholder-count="1">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:var(--color-neutral-200)">
+              <a href="{{ l.url }}" target="_blank" style="font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ l.url }}</a>
+              <button onClick="{{ l.onRemove }}" style="all:unset;cursor:pointer;font-weight:700;color:var(--color-neutral-600);margin-left:auto;padding:0 2px">×</button>
+            </div>
+          </sc-for>
+          <div style="display:flex;gap:8px">
+            <input class="input" style="flex:1" value="{{ linkVal }}" onChange="{{ onLinkVal }}" onKeyDown="{{ onLinkKey }}" placeholder="https://…">
+            <button class="btn btn-secondary" onClick="{{ onAddLink }}">Add link</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Add skills</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <sc-for list="{{ subChips }}" as="c" hint-placeholder-count="2">
+            <span class="tag tag-accent" style="display:inline-flex;align-items:center;gap:6px">{{ c.name }}<button onClick="{{ c.onRemove }}" style="all:unset;cursor:pointer;font-weight:700;padding:0 2px">×</button></span>
+          </sc-for>
+          <select class="input" style="width:200px" value="" onChange="{{ onAddSub }}">
+            <option value="">Add a skill…</option>
+            <sc-for list="{{ addable }}" as="o">
+              <option value="{{ o.id }}">{{ o.name }}</option>
+            </sc-for>
+          </select>
+        </div>
+        <sc-if value="{{ hasInheritedNote }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:8px 0 0;font-size:12px;color:var(--color-accent-2-700)">Also inherits (transitively): {{ inheritedNote }}</p>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+    <sc-if value="{{ noSel }}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="flex:1;padding:60px;text-align:center;border-radius:calc(var(--radius-lg) * 1.3);color:var(--color-neutral-600)">No skills yet — create one.</div>
+    </sc-if>
+
+    <!-- Agent briefing preview -->
+    <sc-if value="{{ showPreview }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;min-width:300px;max-width:360px;display:flex;flex-direction:column;gap:10px">
+      <div style="padding:2px 4px">
+        <span style="font-family:var(--font-heading);font-size:18px;color:var(--color-text)">Agent briefing</span>
+        <p style="margin:4px 0 0;font-size:12px;color:var(--color-neutral-600)">What an agent loads when assigned “{{ fName }}” — sub-skills resolved in order, duplicates loaded once.</p>
+      </div>
+      <div class="card" style="padding:18px 20px;border-radius:calc(var(--radius-lg) * 1.3);display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ stack }}" as="s" hint-placeholder-count="3">
+          <div style="margin-left:{{ s.indent }};padding:10px 14px;border-radius:var(--radius-lg);background:{{ s.bg }};border:1px solid var(--color-divider)">
+            <div style="display:flex;align-items:baseline;gap:8px">
+              <span style="font-weight:700;font-size:13px;color:var(--color-text)">{{ s.name }}</span>
+              <sc-if value="{{ s.isRoot }}" hint-placeholder-val="{{ false }}"><span class="tag tag-accent" style="margin-left:auto">assigned</span></sc-if>
+            </div>
+            <sc-if value="{{ s.hasVia }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:11px;color:var(--color-neutral-600);margin-top:2px">via {{ s.via }}</div>
+            </sc-if>
+            <div style="font-size:11px;color:var(--color-neutral-600);margin-top:3px">{{ s.meta }}</div>
+          </div>
+        </sc-for>
+        <div style="height:1px;background:var(--color-divider);margin:4px 0"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="tag tag-accent-2">{{ totPrompts }}&nbsp;prompts</span>
+          <span class="tag tag-neutral">{{ totFiles }}&nbsp;files</span>
+          <span class="tag tag-neutral">{{ totLinks }}&nbsp;links</span>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showAgentPreview&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;allowDelete&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  DOTS = ['var(--color-accent)', 'var(--color-accent-2)', 'var(--color-neutral-500)', 'var(--color-accent-700)', 'var(--color-accent-2-700)', 'var(--color-neutral-700)'];
+  SEED = [
+    { id: 'web', name: 'Web Research', systemPrompt: 'You are a careful researcher. Search broadly, prefer primary sources, and always cite where a claim came from.', instructions: 'Run 2\u20134 focused searches before answering. Note the date of every source. Flag anything you could not verify.', attachments: ['source-quality-rubric.pdf'], links: ['https://lecrew.dev/guides/research'], subs: [] },
+    { id: 'sum', name: 'Summarize', systemPrompt: 'You compress long material into short, faithful summaries without losing caveats.', instructions: 'Lead with the one-sentence takeaway, then 3\u20135 bullets. Keep numbers exact.', attachments: [], links: [], subs: [] },
+    { id: 'deep', name: 'Deep Research', systemPrompt: 'You run multi-step investigations: plan, gather, cross-check, then synthesize into a briefing.', instructions: 'Write a plan first. Reconcile conflicting sources explicitly before concluding.', attachments: ['briefing-template.md'], links: [], subs: ['web', 'sum'] },
+    { id: 'sheets', name: 'Spreadsheet Wrangling', systemPrompt: 'You are precise with tabular data \u2014 formulas, pivots, and sanity checks on totals.', instructions: 'Always re-derive totals independently. Name every sheet and column clearly.', attachments: ['formula-cheatsheet.xlsx'], links: [], subs: [] },
+    { id: 'finrep', name: 'Financial Reporting', systemPrompt: 'You prepare finance-ready reports: conservative wording, every figure traceable.', instructions: 'Round consistently. Include a methodology note at the end of every report.', attachments: [], links: ['https://lecrew.dev/finance/reporting-standard'], subs: ['sheets', 'sum'] },
+    { id: 'email', name: 'Customer Email', systemPrompt: 'You write warm, brief customer emails in The Cubicle voice.', instructions: 'One ask per email. Subject lines under 8 words.', attachments: ['tone-guide.md'], links: [], subs: ['sum'] },
+  ];
+  SEED_META = { web: ['Research', ['search', 'citations']], sum: ['Writing', ['condense']], deep: ['Research', ['multi-step', 'briefing']], sheets: ['Data', ['excel', 'formulas']], finrep: ['Finance', ['reports']], email: ['Comms', ['tone', 'customers']] };
+  state = { skills: this.load(), selId: null, linkVal: '', tagVal: '', query: '', filter: 'all', sort: 'az' };
+  load() {
+    let s = null;
+    try { s = JSON.parse(localStorage.getItem('cubicleSkillsAdminV1')); } catch (e) {}
+    if (!Array.isArray(s) || !s.length) s = this.SEED.map((k) => ({ ...k, category: this.SEED_META[k.id][0], tags: this.SEED_META[k.id][1] }));
+    s.forEach((k) => { k.tags = k.tags || []; k.category = k.category || ''; });
+    return s;
+  }
+  save() { try { localStorage.setItem('cubicleSkillsAdminV1', JSON.stringify(this.state.skills)); } catch (e) {} }
+  byId(id) { return this.state.skills.find((s) => s.id === id); }
+  sel() { return this.byId(this.state.selId) || this.state.skills[0]; }
+  up(fn) { fn(); this.save(); this.forceUpdate(); }
+  resolve(id, seen, depth, via, out) {
+    if (seen.has(id)) return out;
+    seen.add(id);
+    const s = this.byId(id);
+    if (!s) return out;
+    out.push({ s, depth, via });
+    for (const sub of s.subs) this.resolve(sub, seen, depth + 1, s.name, out);
+    return out;
+  }
+  closure(id) { return this.resolve(id, new Set(), 0, null, []).map((r) => r.s.id); }
+  renderVals() {
+    const skills = this.state.skills;
+    const sel = this.sel();
+    const dotOf = (s) => this.DOTS[skills.indexOf(s) % this.DOTS.length];
+    const { query, filter, sort } = this.state;
+    const usedIds = new Set(skills.flatMap((s) => s.subs));
+    // query supports plain text plus tag:x and cat:x operators
+    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let list = skills.filter((s) => {
+      for (const t of terms) {
+        if (t.startsWith('tag:')) { if (!s.tags.some((x) => x.toLowerCase().includes(t.slice(4)))) return false; }
+        else if (t.startsWith('cat:')) { if (!s.category.toLowerCase().includes(t.slice(4))) return false; }
+        else if (!(s.name + ' ' + s.systemPrompt + ' ' + s.instructions + ' ' + s.category + ' ' + s.tags.join(' ')).toLowerCase().includes(t)) return false;
+      }
+      if (filter === 'bundles') return s.subs.length > 0;
+      if (filter === 'standalone') return s.subs.length === 0;
+      if (filter === 'unused') return !usedIds.has(s.id);
+      return true;
+    });
+    if (sort === 'az') list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    else list = [...list].sort((a, b) => this.closure(b.id).length - this.closure(a.id).length);
+    const mkRow = (s) => {
+      const isSel = sel && s.id === sel.id;
+      return {
+        name: s.name, dot: dotOf(s), hasSubs: s.subs.length > 0, subCount: '+' + s.subs.length,
+        hasTags: s.tags.length > 0, tagTxt: s.tags.join(' · '),
+        bg: isSel ? 'var(--color-neutral-100)' : 'transparent',
+        border: isSel ? 'var(--color-accent)' : 'var(--color-divider)',
+        shadow: isSel ? 'var(--shadow-sm)' : 'none',
+        onSelect: () => this.setState({ selId: s.id, linkVal: '' }),
+      };
+    };
+    let groups;
+    if (sort === 'cat') {
+      const map = new Map();
+      for (const s of [...list].sort((a, b) => (a.category || '~').localeCompare(b.category || '~') || a.name.localeCompare(b.name))) {
+        const key = s.category || 'Uncategorized';
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(s);
+      }
+      groups = [...map.entries()].map(([label, ss]) => ({ label, rows: ss.map(mkRow) }));
+    } else if (sort === 'az') {
+      const map = new Map();
+      for (const s of list) {
+        const L = (s.name[0] || '#').toUpperCase();
+        const key = /[A-Z]/.test(L) ? L : '#';
+        if (!map.has(key)) map.set(key, []);
+        map.get(key).push(s);
+      }
+      groups = [...map.entries()].map(([label, ss]) => ({ label, rows: ss.map(mkRow) }));
+    } else {
+      groups = [{ label: 'Largest stacks first', rows: list.map(mkRow) }];
+    }
+    const FILTERS = [['all', 'All'], ['bundles', 'Bundles'], ['standalone', 'Standalone'], ['unused', 'Unused']];
+    const vals = {
+      nSkills: skills.length,
+      nEdges: skills.reduce((n, s) => n + s.subs.length, 0),
+      groups, noResults: list.length === 0, query,
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      filters: FILTERS.map(([id, label]) => ({
+        label, onPick: () => this.setState({ filter: id }),
+        bg: filter === id ? 'var(--color-accent-2-100)' : 'transparent',
+        color: filter === id ? 'var(--color-accent-2-800)' : 'var(--color-neutral-700)',
+        border: filter === id ? 'var(--color-accent-2-300)' : 'var(--color-divider)',
+      })),
+      resultMeta: list.length + ' of ' + skills.length + ' shown',
+      sortLabel: sort === 'az' ? 'A–Z ▾' : sort === 'cat' ? 'Category ▾' : 'Stack size ▾',
+      onToggleSort: () => this.setState({ sort: sort === 'az' ? 'cat' : sort === 'cat' ? 'size' : 'az' }),
+      hasSel: !!sel, noSel: !sel,
+      allowDelete: this.props.allowDelete ?? true,
+      showPreview: (this.props.showAgentPreview ?? true) && !!sel,
+      linkVal: this.state.linkVal,
+      onNew: () => this.up(() => {
+        const s = { id: 's' + Date.now(), name: 'New skill', category: '', tags: [], systemPrompt: '', instructions: '', attachments: [], links: [], subs: [] };
+        skills.push(s); this.state.selId = s.id;
+      }),
+    };
+    if (!sel) return vals;
+    const resolved = this.resolve(sel.id, new Set(), 0, null, []);
+    const inherited = resolved.filter((r) => r.depth > 1);
+    Object.assign(vals, {
+      fName: sel.name, fPrompt: sel.systemPrompt, fInstructions: sel.instructions,
+      selMeta: sel.subs.length ? 'includes ' + sel.subs.length + ' skill' + (sel.subs.length > 1 ? 's' : '') + ' \u00b7 ' + (resolved.length - 1) + ' in full stack' : 'standalone skill',
+      parents: skills.filter((s) => s.subs.includes(sel.id)).map((s) => ({ name: s.name, onGo: () => this.setState({ selId: s.id, linkVal: '' }) })),
+      hasParents: skills.some((s) => s.subs.includes(sel.id)),
+      fCategory: sel.category, tagVal: this.state.tagVal,
+      catOptions: [...new Set(skills.map((s) => s.category).filter(Boolean))].sort(),
+      tagOptions: [...new Set(skills.flatMap((s) => s.tags))].filter((t) => !sel.tags.includes(t)).sort(),
+      onCategory: (e) => this.up(() => { sel.category = e.target.value; }),
+      tagChips: sel.tags.map((name, i) => ({ name, onRemove: () => this.up(() => sel.tags.splice(i, 1)) })),
+      onTagVal: (e) => this.setState({ tagVal: e.target.value }),
+      onTagKey: (e) => {
+        if (e.key !== 'Enter') return;
+        const v = this.state.tagVal.trim().toLowerCase();
+        if (v && !sel.tags.includes(v)) this.up(() => { sel.tags.push(v); this.state.tagVal = ''; });
+        else this.setState({ tagVal: '' });
+      },
+      onName: (e) => this.up(() => { sel.name = e.target.value; }),
+      onPrompt: (e) => this.up(() => { sel.systemPrompt = e.target.value; }),
+      onInstructions: (e) => this.up(() => { sel.instructions = e.target.value; }),
+      onDelete: () => this.up(() => {
+        const i = skills.indexOf(sel); skills.splice(i, 1);
+        skills.forEach((s) => { s.subs = s.subs.filter((x) => x !== sel.id); });
+        this.state.selId = skills[0] ? skills[0].id : null;
+      }),
+      attachments: sel.attachments.map((name, i) => ({ name, onRemove: () => this.up(() => sel.attachments.splice(i, 1)) })),
+      noAttachments: sel.attachments.length === 0,
+      onAttach: (e) => {
+        const names = Array.from(e.target.files || []).map((f) => f.name);
+        e.target.value = '';
+        if (names.length) this.up(() => sel.attachments.push(...names));
+      },
+      links: sel.links.map((url, i) => ({ url, onRemove: () => this.up(() => sel.links.splice(i, 1)) })),
+      onLinkVal: (e) => this.setState({ linkVal: e.target.value }),
+      onLinkKey: (e) => { if (e.key === 'Enter') vals.onAddLink(); },
+      onAddLink: () => {
+        const v = this.state.linkVal.trim();
+        if (!v) return;
+        this.up(() => { sel.links.push(v); this.state.linkVal = ''; });
+      },
+      subChips: sel.subs.map((id, i) => ({ name: (this.byId(id) || { name: id }).name, onRemove: () => this.up(() => sel.subs.splice(i, 1)) })),
+      addable: skills.filter((s) => s.id !== sel.id && !sel.subs.includes(s.id) && !this.closure(s.id).includes(sel.id)).map((s) => ({ id: s.id, name: s.name })),
+      onAddSub: (e) => { const id = e.target.value; if (id) this.up(() => sel.subs.push(id)); },
+      hasInheritedNote: inherited.length > 0,
+      inheritedNote: [...new Set(inherited.map((r) => r.s.name))].join(', '),
+      stack: resolved.map((r) => ({
+        name: r.s.name, indent: (Math.min(r.depth, 3) * 14) + 'px',
+        isRoot: r.depth === 0, hasVia: !!r.via, via: r.via,
+        bg: r.depth === 0 ? 'var(--color-accent-100)' : r.depth === 1 ? 'var(--color-neutral-200)' : 'var(--color-bg)',
+        meta: [r.s.systemPrompt ? 'prompt' : null, r.s.attachments.length ? r.s.attachments.length + ' file' + (r.s.attachments.length > 1 ? 's' : '') : null, r.s.links.length ? r.s.links.length + ' link' + (r.s.links.length > 1 ? 's' : '') : null].filter(Boolean).join(' \u00b7 ') || 'empty skill',
+      })),
+      totPrompts: resolved.filter((r) => r.s.systemPrompt).length,
+      totFiles: resolved.reduce((n, r) => n + r.s.attachments.length, 0),
+      totLinks: resolved.reduce((n, r) => n + r.s.links.length, 0),
+    });
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

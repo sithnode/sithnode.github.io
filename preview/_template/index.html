@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Preview | Walter Roby</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="description" content="Private preview page for selected reviewers.">
+<style>
+  :root{
+    --bg:#080E1A; --card:#151F35; --accent:#C9A84C;
+    --accentDim:rgba(201,168,76,0.15); --text:#E2E7F0;
+    --muted:#7A849A; --border:rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box;margin:0;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7;padding:32px 20px;}
+  .wrap{max-width:840px;margin:0 auto;}
+  .card{background:var(--card);border:1px solid var(--border);padding:28px;}
+  .eyebrow{display:inline-block;color:var(--accent);background:var(--accentDim);padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;}
+  h1{font-size:clamp(28px,5vw,46px);line-height:1.1;font-family:Georgia,serif;margin-bottom:14px;}
+  h2{font-size:18px;margin:28px 0 12px;}
+  p, li{color:var(--muted);font-size:15px;}
+  ul{padding-left:18px;}
+  li + li{margin-top:8px;}
+  .meta{display:grid;gap:10px;margin-top:22px;}
+  .meta strong{color:var(--text);}
+  .notice{border-left:3px solid var(--accent);padding-left:14px;margin-top:18px;}
+  a{color:var(--accent);text-decoration:none;}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text);}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <span class="eyebrow">Private Preview</span>
+      <h1>Template For Hidden Test Pages</h1>
+      <p>Use this folder as a copy source when you want to create a new clean-url preview for selected users.</p>
+
+      <div class="meta">
+        <p><strong>Suggested location:</strong> <code>/preview/short-project-name-r4nd0m/</code></p>
+        <p><strong>Suggested URL:</strong> <code>https://walterroby.com/preview/short-project-name-r4nd0m/</code></p>
+        <p><strong>Visibility:</strong> unlinked, noindex, and blocked by <code>robots.txt</code></p>
+      </div>
+
+      <div class="notice">
+        <p>Do not treat this as real access control. Anyone with the URL can still open and share it.</p>
+      </div>
+
+      <h2>What To Replace</h2>
+      <ul>
+        <li>Update the page title and description.</li>
+        <li>Replace the heading with the project name.</li>
+        <li>Add screenshots, notes, or a test checklist.</li>
+        <li>Use a new random suffix for each preview route.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

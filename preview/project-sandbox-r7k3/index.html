@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Sandbox Preview | Walter Roby</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="description" content="Private preview page for selected reviewers.">
+<style>
+  :root{
+    --bg:#080E1A; --card:#151F35; --accent:#C9A84C;
+    --accentDim:rgba(201,168,76,0.15); --text:#E2E7F0;
+    --muted:#7A849A; --border:rgba(255,255,255,0.06);
+  }
+  *{box-sizing:border-box;margin:0;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7;padding:32px 20px;}
+  .wrap{max-width:920px;margin:0 auto;}
+  .card{background:var(--card);border:1px solid var(--border);padding:28px;}
+  .eyebrow{display:inline-block;color:var(--accent);background:var(--accentDim);padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;}
+  h1{font-size:clamp(30px,5vw,48px);line-height:1.08;font-family:Georgia,serif;margin-bottom:12px;}
+  h2{font-size:18px;margin:28px 0 12px;}
+  p, li{color:var(--muted);font-size:15px;}
+  ul{padding-left:18px;}
+  li + li{margin-top:8px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px;}
+  .panel{border:1px solid var(--border);padding:18px;background:rgba(255,255,255,0.02);}
+  .notice{border-left:3px solid var(--accent);padding-left:14px;margin-top:18px;}
+  a{color:var(--accent);text-decoration:none;}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <span class="eyebrow">Selected User Preview</span>
+      <h1>Project Sandbox</h1>
+      <p>This route is configured for public testing with a direct link only. It is not linked from the main site, includes noindex directives, and lives under a crawl-blocked preview path.</p>
+
+      <div class="notice">
+        <p>Share this URL directly with testers: <a href="https://walterroby.com/preview/project-sandbox-r7k3/">walterroby.com/preview/project-sandbox-r7k3/</a></p>
+      </div>
+
+      <div class="grid">
+        <div class="panel">
+          <h2>What To Test</h2>
+          <ul>
+            <li>First-run clarity</li>
+            <li>Layout and mobile behavior</li>
+            <li>Any broken flows or missing content</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>Feedback Request</h2>
+          <ul>
+            <li>What confused you first?</li>
+            <li>What would stop you from using this?</li>
+            <li>What feels unfinished?</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Before Sending</h2>
+      <ul>
+        <li>Rename the folder to a less guessable slug for each new preview.</li>
+        <li>Replace this placeholder copy with the actual test content.</li>
+        <li>Do not put secrets or sensitive data in any GitHub Pages preview.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

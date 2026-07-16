@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/styles.css">
+<script src="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);font-family:var(--font-body)}
+a{color:var(--color-accent)} a:hover{color:var(--color-accent-600)}
+@keyframes oj-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes oj-work{from{transform:rotate(-7deg)}to{transform:rotate(9deg)}}
+@keyframes oj-fumble{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes oj-drop{from{transform:rotate(14deg)}to{transform:rotate(26deg)}}
+@keyframes oj-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes oj-blink{50%{opacity:0}}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid var(--color-divider);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:var(--color-neutral-900);color:var(--color-neutral-100);border-radius:6px;text-decoration:none}
+.dv-tname{font:600 14px/1.2 var(--font-body);color:var(--color-text)}
+.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;margin-bottom:34px}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:var(--color-neutral-200);color:var(--color-neutral-800);border-radius:6px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 var(--font-body);color:var(--color-neutral-700)}
+.dv-card{max-width:100%;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden}
+.dv-opt:target .dv-oid{background:var(--color-accent);color:var(--color-neutral-100)}
+.dv-next{margin:10px 0 0;font:13px/1.5 var(--font-body);color:var(--color-neutral-700)}
+.dv-group{font-family:var(--font-body);font-weight:700;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-accent-2-700);margin:0 0 14px}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd">
+    <a class="dv-tid" href="#t1">1</a>
+    <span class="dv-tname">Odd Jobs — mascot style directions, Hiring Hall layouts, persona schema v1</span>
+  </div>
+
+  <h6 class="dv-group">Mascot directions — one parametric component: hue × headgear × prop × expression × live state</h6>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Softies — cream face patch, no outline, blushy</div>
+      <div class="dv-card" style="padding:22px 26px;width:620px">
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:space-between">
+          <sc-for list="{{ dirA }}" as="m" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              {{ m.el }}
+              <span style="font-size:10.5px;color:var(--color-neutral-600);text-align:center">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:1px;background:var(--color-divider);margin:16px 0"></div>
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:space-between">
+          <sc-for list="{{ stA }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              {{ m.el }}
+              <span style="font-size:10.5px;font-weight:600;color:var(--color-accent-700);text-align:center">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Visor crew — glowing visor eyes, chest button, gadgety</div>
+      <div class="dv-card" style="padding:22px 26px;width:620px">
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:space-between">
+          <sc-for list="{{ dirB }}" as="m" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              {{ m.el }}
+              <span style="font-size:10.5px;color:var(--color-neutral-600);text-align:center">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:1px;background:var(--color-divider);margin:16px 0"></div>
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:space-between">
+          <sc-for list="{{ stB }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              {{ m.el }}
+              <span style="font-size:10.5px;font-weight:600;color:var(--color-accent-700);text-align:center">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Inked — thick outline sticker style, flat fills</div>
+      <div class="dv-card" style="padding:22px 26px;width:620px">
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:space-between">
+          <sc-for list="{{ dirC }}" as="m" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              {{ m.el }}
+              <span style="font-size:10.5px;color:var(--color-neutral-600);text-align:center">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:1px;background:var(--color-divider);margin:16px 0"></div>
+        <div style="display:flex;gap:14px;align-items:flex-end;justify-content:space-between">
+          <sc-for list="{{ stC }}" as="m" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+              {{ m.el }}
+              <span style="font-size:10.5px;font-weight:600;color:var(--color-accent-700);text-align:center">{{ m.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="dv-group">Hiring Hall layouts — shown with direction <a class="dv-oid" href="#1a">1a</a>; every mascot here is honestly idle</h6>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Roster grid — classic cards, stat pips, hire buttons</div>
+      <div class="dv-card" style="width:940px;padding:26px 30px">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:20px">
+          <h2 style="margin:0">Odd Jobs</h2>
+          <span style="font-size:13px;color:var(--color-neutral-600)">Hiring Hall — 15 layabouts available, 0 benefits required</span>
+          <span class="tag tag-accent-2" style="margin-left:auto">3 hired</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <sc-for list="{{ roster }}" as="p" hint-placeholder-count="6">
+            <div class="card elev-sm" style="align-items:center;text-align:center;gap:8px;padding:18px">
+              {{ p.el }}
+              <div style="font-family:var(--font-heading);font-size:18px">{{ p.name }}</div>
+              <span class="tag tag-accent">{{ p.dept }}</span>
+              <div style="font-size:12px;color:var(--color-neutral-700);min-height:32px">{{ p.tagline }}</div>
+              <div style="display:flex;gap:12px;font-size:10px;color:var(--color-neutral-600)">
+                <span>HUSTLE <span style="color:var(--color-accent-600);letter-spacing:2px">{{ p.hustle }}</span></span>
+                <span>CHAOS <span style="color:var(--color-accent-600);letter-spacing:2px">{{ p.chaos }}</span></span>
+              </div>
+              <button class="btn btn-primary" style="width:100%">Hire ’em</button>
+            </div>
+          </sc-for>
+          <div style="border:2px dashed var(--color-neutral-400);border-radius:calc(var(--radius-lg) * 1.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px;text-align:center">
+            <div style="opacity:.35">{{ ghostEl }}</div>
+            <div style="font-family:var(--font-heading);font-size:16px">Roll your own weirdo</div>
+            <div style="font-size:12px;color:var(--color-neutral-600)">Pick a hue, a hat, a prop — then write the brain.</div>
+            <button class="btn btn-secondary">Open the workshop</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Corkboard — pinned “work wanted” posters</div>
+      <div class="dv-card" style="width:860px;padding:0;background:var(--color-surface)">
+        <div style="padding:26px 30px">
+          <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px">
+            <h2 style="margin:0">Work wanted</h2>
+            <span style="font-size:13px;color:var(--color-neutral-700)">The Odd Jobs board — tear off a tab, gain a coworker</span>
+          </div>
+          <div style="display:flex;gap:22px;flex-wrap:wrap;justify-content:center">
+            <div style="transform:rotate(-2.2deg);background:var(--color-neutral-100);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:18px 20px 16px;width:180px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative">
+              <div style="position:absolute;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--color-accent);box-shadow:var(--shadow-sm)"></div>
+              <div style="font-size:9px;letter-spacing:.14em;color:var(--color-accent-700)">WILL WORK FOR TOKENS</div>
+              {{ bRatchet }}
+              <div style="font-family:var(--font-heading);font-size:17px">Ratchet</div>
+              <div style="font-size:11px;color:var(--color-neutral-700);text-align:center">Percussive maintenance, but polite.</div>
+              <button class="btn btn-secondary" style="transform:rotate(1.5deg)">HIRE ’EM</button>
+            </div>
+            <div style="transform:rotate(1.8deg);background:var(--color-neutral-100);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:18px 20px 16px;width:180px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative">
+              <div style="position:absolute;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--color-accent-2);box-shadow:var(--shadow-sm)"></div>
+              <div style="font-size:9px;letter-spacing:.14em;color:var(--color-accent-700)">THREE DRAFTS IN A TRENCHCOAT</div>
+              {{ bScribbles }}
+              <div style="font-family:var(--font-heading);font-size:17px">Scribbles</div>
+              <div style="font-size:11px;color:var(--color-neutral-700);text-align:center">Copy, docs, apologies. Fast.</div>
+              <button class="btn btn-secondary" style="transform:rotate(-1.5deg)">HIRE ’EM</button>
+            </div>
+            <div style="transform:rotate(-1.4deg);background:var(--color-neutral-100);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:18px 20px 16px;width:180px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative">
+              <div style="position:absolute;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--color-accent);box-shadow:var(--shadow-sm)"></div>
+              <div style="font-size:9px;letter-spacing:.14em;color:var(--color-accent-700)">RESULTS MAY VARY</div>
+              {{ bBeaker }}
+              <div style="font-family:var(--font-heading);font-size:17px">Beaker</div>
+              <div style="font-size:11px;color:var(--color-neutral-700);text-align:center">60% of the time, it works every time.</div>
+              <button class="btn btn-secondary" style="transform:rotate(1deg)">HIRE ’EM</button>
+            </div>
+            <div style="transform:rotate(2.4deg);background:var(--color-neutral-100);border-radius:var(--radius-md);box-shadow:var(--shadow-md);padding:18px 20px 16px;width:180px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative">
+              <div style="position:absolute;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--color-accent-2);box-shadow:var(--shadow-sm)"></div>
+              <div style="font-size:9px;letter-spacing:.14em;color:var(--color-accent-700)">RUNS ON CAFFEINE AND CRON</div>
+              {{ bJava }}
+              <div style="font-family:var(--font-heading);font-size:17px">Java</div>
+              <div style="font-size:11px;color:var(--color-neutral-700);text-align:center">Keeps the lights on. Mostly awake.</div>
+              <button class="btn btn-secondary" style="transform:rotate(-2deg)">HIRE ’EM</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Union hall counter — dense rows grouped by crew</div>
+      <div class="dv-card" style="width:780px;padding:26px 30px">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:18px">
+          <h2 style="margin:0">The Hall</h2>
+          <span style="font-size:13px;color:var(--color-neutral-600)">Sign the book, take a number</span>
+        </div>
+        <sc-for list="{{ counter }}" as="g" hint-placeholder-count="2">
+          <div style="margin-bottom:18px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--color-accent-2-700);border-bottom:1px solid var(--color-divider);padding-bottom:6px;margin-bottom:4px">{{ g.dept }}</div>
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid color-mix(in srgb, var(--color-text) 7%, transparent)">
+                {{ r.el }}
+                <div style="min-width:0">
+                  <div style="font-family:var(--font-heading);font-size:15px">{{ r.name }}</div>
+                  <div style="font-size:11.5px;color:var(--color-neutral-600)">{{ r.tagline }}</div>
+                </div>
+                <div style="margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--color-neutral-600)">{{ r.tools }}</div>
+                <span style="font-size:10px;color:var(--color-accent-600);letter-spacing:2px">{{ r.hustle }}</span>
+                <button class="btn btn-secondary" style="font-size:12px;padding:5px 14px">Hire</button>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <h6 class="dv-group">Persona schema v1 — the mascot is a thin skin over this</h6>
+  <div class="dv-opts">
+    <div class="dv-opt" id="1g">
+      <div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Schema + the event → floor contract</div>
+      <div class="dv-card" style="width:960px;padding:26px 30px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px">
+          <pre style="margin:0;background:var(--color-neutral-900);color:var(--color-neutral-200);border-radius:var(--radius-lg);padding:20px 22px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.65;overflow:auto">{
+  "id": "ratchet",
+  "name": "Ratchet",
+  "dept": "Fix-It",
+  "tagline": "Percussive maintenance, but polite.",
+
+  "look": {
+    "hue": 24,
+    "headgear": "hardhat",
+    "prop": "wrench",
+    "expression": "happy"
+  },
+
+  "persona": {
+    "system_prompt": "You are Ratchet, a cheerful
+      fix-anything agent. You diagnose before you
+      touch. You narrate briefly as you work.",
+    "voice": "chipper, tool puns, no filler"
+  },
+
+  "tools": ["shell", "file_edit", "web_search"],
+
+  "constraints": {
+    "max_steps": 12,
+    "token_budget": 60000,
+    "may_delegate": false,
+    "must_report_failures": true
+  },
+
+  "stats": { "hustle": 4, "caution": 3, "chaos": 2 }
+}</pre>
+          <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px">
+            <div><span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-accent-700);font-weight:600">look</span> — pure costume. Render-side only; never serialized into the model context.</div>
+            <div><span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-accent-700);font-weight:600">persona.system_prompt</span> — the actual agent. Editing this in the workshop is “writing the brain.”</div>
+            <div><span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-accent-700);font-weight:600">tools</span> — an allowlist. Each tool maps 1:1 to a desk animation on the Floor.</div>
+            <div><span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-accent-700);font-weight:600">constraints</span> — hard caps enforced by the orchestrator, not suggestions in the prompt.</div>
+            <div><span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-accent-700);font-weight:600">stats</span> — derived from constraints + temperament; the pips on the hiring cards.</div>
+            <div style="height:1px;background:var(--color-divider);margin:4px 0"></div>
+            <div style="font-weight:700;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-accent-2-700)">Event → floor contract (the honesty rule)</div>
+            <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:12px">
+              <span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-neutral-800)">think</span><span>thought bubble renders the reasoning summary, live</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-neutral-800)">tool_call</span><span>desk animation for that tool (searching, calculating, writing)</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-neutral-800)">tool_error</span><span>mascot fumbles — shake + ⚠ badge, no exceptions</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-neutral-800)">handoff</span><span>mascot walks to the other desk, carries the artifact</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;color:var(--color-neutral-800)">(no event)</span><span>mascot is idle. No decorative busywork, ever.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="dv-next">Try next: “go with <a class="dv-oid" href="#1a">1a</a> + <a class="dv-oid" href="#1d">1d</a> — build the Hall, the workshop and the Floor” · “make <a class="dv-oid" href="#1b">1b</a>’s visor rounder” · “mix: <a class="dv-oid" href="#1c">1c</a> outlines on <a class="dv-oid" href="#1a">1a</a>’s face”</p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  async componentDidMount() {
+    this.M = await import(new URL('./mascot.js', document.baseURI).href);
+    this.forceUpdate();
+  }
+
+  el(opts) {
+    if (!this.M) return null;
+    return React.createElement('div', {
+      style: { width: (opts.size || 120) + 'px', flex: 'none', lineHeight: 0 },
+      dangerouslySetInnerHTML: { __html: this.M.mascotSVG(opts) },
+    });
+  }
+
+  renderVals() {
+    const pips = (n) => '\u25cf'.repeat(n) + '\u25cb'.repeat(5 - n);
+
+    const CREW = [
+      { id: 'ratchet', name: 'Ratchet', dept: 'Fix-It', hue: 24, gear: 'hardhat', prop: 'wrench', expr: 'happy', tagline: 'Percussive maintenance, but polite.', tools: 'shell · file_edit', stats: { hustle: 4, chaos: 2 } },
+      { id: 'peek', name: 'Peek', dept: 'Research', hue: 176, gear: 'cap', prop: 'magnifier', expr: 'focused', tagline: 'Reads the footnotes so you don\u2019t have to.', tools: 'web_search · fetch', stats: { hustle: 3, chaos: 1 } },
+      { id: 'ledger', name: 'Ledger', dept: 'Numbers', hue: 226, gear: 'none', prop: 'calculator', expr: 'focused', tagline: 'Will pivot tables for food.', tools: 'calculator · sheets', stats: { hustle: 3, chaos: 1 } },
+      { id: 'scribbles', name: 'Scribbles', dept: 'Words', hue: 315, gear: 'beret', prop: 'pencil', expr: 'happy', tagline: 'Three drafts in a trenchcoat.', tools: 'write · critique', stats: { hustle: 4, chaos: 3 } },
+      { id: 'holler', name: 'Holler', dept: 'Marketing', hue: 46, gear: 'none', prop: 'megaphone', expr: 'happy', tagline: 'Contractually obligated to say synergy.', tools: 'write · post', stats: { hustle: 5, chaos: 4 } },
+      { id: 'beaker', name: 'Beaker', dept: 'R&D', hue: 95, gear: 'antenna', prop: 'flask', expr: 'worried', tagline: '60% of the time, it works every time.', tools: 'code_run · search', stats: { hustle: 4, chaos: 5 } },
+      { id: 'java', name: 'Java', dept: 'Ops', hue: 9, gear: 'headset', prop: 'coffee', expr: 'sleepy', tagline: 'Runs on caffeine and cron.', tools: 'shell · monitor', stats: { hustle: 2, chaos: 2 } },
+    ];
+
+    const lineup = [
+      { hue: 24, gear: 'hardhat', prop: 'wrench', expr: 'happy', label: 'Clay · hardhat · wrench' },
+      { hue: 176, gear: 'cap', prop: 'magnifier', expr: 'focused', label: 'Teal · cap · magnifier' },
+      { hue: 315, gear: 'beret', prop: 'pencil', expr: 'sleepy', label: 'Plum · beret · pencil' },
+      { hue: 95, gear: 'antenna', prop: 'flask', expr: 'worried', label: 'Sage · antenna · flask' },
+    ];
+    const states = [
+      { state: 'idle', label: 'Idle (actually idle)' },
+      { state: 'working', label: 'On the clock' },
+      { state: 'fumble', label: 'Fumbled a tool call' },
+    ];
+    const mk = (styleDir) => lineup.map((o) => ({ label: o.label, el: this.el({ ...o, styleDir, size: 112 }) }));
+    const mkSt = (styleDir) => states.map((o) => ({ label: o.label, el: this.el({ styleDir, hue: 24, gear: 'hardhat', prop: 'wrench', state: o.state, size: 112 }) }));
+
+    const roster = CREW.slice(0, 6).map((p) => ({
+      name: p.name, dept: p.dept, tagline: p.tagline,
+      hustle: pips(p.stats.hustle), chaos: pips(p.stats.chaos),
+      el: this.el({ styleDir: 'a', hue: p.hue, gear: p.gear, prop: p.prop, expr: p.expr, size: 92 }),
+    }));
+
+    const byId = (id) => CREW.find((c) => c.id === id);
+    const bEl = (id, size) => {
+      const p = byId(id);
+      return this.el({ styleDir: 'a', hue: p.hue, gear: p.gear, prop: p.prop, expr: p.expr, size: size || 104 });
+    };
+
+    const counterRow = (id) => {
+      const p = byId(id);
+      return {
+        name: p.name, tagline: p.tagline, tools: p.tools, hustle: pips(p.stats.hustle),
+        el: this.el({ styleDir: 'a', hue: p.hue, gear: p.gear, prop: p.prop, expr: p.expr, size: 54 }),
+      };
+    };
+    const counter = [
+      { dept: 'Desk crew', rows: ['ledger', 'peek', 'scribbles'].map(counterRow) },
+      { dept: 'Field crew', rows: ['ratchet', 'java'].map(counterRow) },
+    ];
+
+    return {
+      dirA: mk('a'), dirB: mk('b'), dirC: mk('c'),
+      stA: mkSt('a'), stB: mkSt('b'), stC: mkSt('c'),
+      roster, counter,
+      bRatchet: bEl('ratchet'), bScribbles: bEl('scribbles'), bBeaker: bEl('beaker'), bJava: bEl('java'),
+      ghostEl: this.el({ styleDir: 'a', hue: 40, gear: 'none', prop: 'none', expr: 'happy', size: 76 }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

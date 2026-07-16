@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/styles.css">
+<script src="_ds/organic-e7f0a6b7-76d1-46ae-93bc-4b47ffe40ed3/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);font-family:var(--font-body)}
+a{color:var(--color-accent)} a:hover{color:var(--color-accent-600)}
+@keyframes cub-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes cub-step{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes cub-work{from{transform:rotate(-7deg)}to{transform:rotate(9deg)}}
+@keyframes cub-fumble{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+@keyframes cub-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes cub-blink{50%{opacity:0}}
+@keyframes cub-drop{from{transform:rotate(14deg)}to{transform:rotate(26deg)}}
+@keyframes cub-pop{from{transform:scale(0);opacity:0}70%{transform:scale(1.12)}to{transform:scale(1);opacity:1}}
+@keyframes cub-zz{0%{opacity:0;transform:translate(0,0) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translate(14px,-34px) scale(1.25)}}
+@keyframes cub-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes cub-board{from{transform:translateY(30px) scale(.92);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:22px 18px 34px;gap:14px">
+  <div style="width:min(1240px,100%);display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 14px">
+    <a href="Splash.dc.html" style="text-decoration:none"><span style="font-family:var(--font-heading);font-size:22px;color:var(--color-text)">The Cubicle</span></a>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:4px">
+        <a href="Splash.dc.html" class="btn btn-ghost" style="border-radius:999px;font-size:13px;padding:7px 16px;text-decoration:none">Home</a>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <a href="Splash.dc.html#company" class="btn btn-ghost" style="border-radius:999px;font-size:13px;padding:7px 16px;text-decoration:none">The Company</a>
+        <span style="color:var(--color-neutral-500);font-size:13px">›</span>
+        <span class="btn btn-secondary" style="border-radius:999px;font-size:13px;padding:7px 16px;cursor:default">The Floor</span>
+      </div>
+    </div>
+  </div>
+  <div style="width:min(1240px,100%);display:flex;align-items:center;gap:20px;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:calc(var(--radius-lg) * 1.3);box-shadow:var(--shadow-md);padding:14px 26px">
+    <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700)">Company objective — the CEO plans it, then delegates the tracks in parallel</div>
+      <div style="font-family:var(--font-heading);font-size:21px;line-height:1.25">{{ objective }}</div>
+      <div style="font-size:11.5px;color:{{ runColor }};font-weight:600">{{ runLabel }}</div>
+    </div>
+    <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex:none">
+      <div style="display:flex;align-items:center;gap:7px">
+        <sc-for list="{{ ctrls }}" as="c" hint-placeholder-count="3">
+          <button onClick="{{ c.pick }}" title="{{ c.title }}" style="width:38px;height:38px;border-radius:50%;border:1.5px solid {{ c.bc }};background:{{ c.bg }};cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:background .2s" style-hover="border-color:var(--color-accent)">{{ c.el }}</button>
+        </sc-for>
+        <button onClick="{{ openModify }}" class="btn btn-ghost" style="border-radius:999px;font-size:12.5px;padding:8px 16px">Modify</button>
+      </div>
+      <div style="display:flex;gap:8px">
+        <span class="tag tag-accent-2">{{ nWorking }}&nbsp;working</span>
+        <span class="tag tag-neutral">{{ nIdle }}&nbsp;idle</span>
+        <span class="tag tag-accent">{{ nFumble }}&nbsp;fumbling</span>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ modOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeModify }}" style="position:fixed;inset:0;background:rgba(32,30,29,.45);z-index:70;display:flex;align-items:center;justify-content:center;padding:24px">
+      <div onClick="{{ eatClick }}" class="card elev-lg" style="width:min(520px,100%);gap:16px;padding:28px 30px">
+        <h3 style="margin:0;font-family:var(--font-heading);font-weight:400;font-size:24px">Modify the objective</h3>
+        <div style="font-size:12.5px;color:var(--color-neutral-600)">The CEO re-briefs every manager; work in flight is re-triaged against the new goal.</div>
+        <textarea class="input" value="{{ objTmp }}" onChange="{{ onObjTmp }}" rows="3" style="border-radius:var(--radius-lg);resize:vertical;font-size:15px;line-height:1.5;font-family:var(--font-body)"></textarea>
+        <div style="display:flex;gap:10px;justify-content:flex-end">
+          <button class="btn btn-ghost" onClick="{{ closeModify }}" style="border-radius:999px">Cancel</button>
+          <button class="btn btn-primary" onClick="{{ saveModify }}" style="border-radius:999px">Re-brief the crew</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="width:min(1240px,100%);display:flex;gap:14px;align-items:stretch">
+    <div style="width:248px;flex:none;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:22px;padding:16px 14px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-sm)">
+      <div style="display:flex;align-items:center;gap:8px;padding:0 4px 6px">
+        <span style="font-family:var(--font-heading);font-size:16px;color:var(--color-text)">Job queue</span>
+        <span style="margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:10px;color:var(--color-neutral-600)">{{ qCount }}&nbsp;open</span>
+      </div>
+      <div style="flex:1;overflow:auto;display:flex;flex-direction:column;gap:7px;min-height:0">
+        <sc-for list="{{ qItems }}" as="j" hint-placeholder-count="5">
+          <div style="background:var(--color-surface);border:1.5px solid {{ j.border }};border-radius:12px;padding:9px 11px;display:flex;flex-direction:column;gap:4px">
+            <div style="font-size:12px;font-weight:700;color:var(--color-text);line-height:1.25;text-transform:capitalize">{{ j.task }}</div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <span style="width:7px;height:7px;border-radius:50%;background:{{ j.dot }};animation:{{ j.dotAnim }};flex:none"></span>
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--color-neutral-600)">{{ j.meta }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ toggleDone }}" style="background:var(--color-neutral-200);border:1.5px solid var(--color-divider);border-radius:12px;padding:9px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--color-neutral-700);font-family:var(--font-body);font-size:11.5px;font-weight:700" style-hover="background:var(--color-neutral-300)">
+        <span style="color:var(--color-accent-2-700)">✓</span>{{ doneLabel }}
+        <span style="margin-left:auto;font-size:10px;transform:rotate({{ doneArrow }}deg);transition:transform .25s;display:inline-block">▸</span>
+      </button>
+      <sc-if value="{{ doneOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:5px;max-height:190px;overflow:auto">
+          <sc-for list="{{ doneItems }}" as="j" hint-placeholder-count="2">
+            <div style="border-radius:10px;padding:7px 11px;display:flex;align-items:baseline;gap:8px;opacity:.65">
+              <span style="color:var(--color-accent-2-700);font-size:10px;flex:none">✓</span>
+              <span style="font-size:11px;color:var(--color-neutral-600);text-decoration:line-through;text-transform:capitalize;line-height:1.3">{{ j.task }}</span>
+              <span style="margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:9px;color:var(--color-neutral-500);flex:none">{{ j.time }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <div style="flex:1;min-width:0;border-radius:22px;overflow:hidden;box-shadow:var(--shadow-md);border:3px solid #8c7a58;position:relative">
+    <div style="background:linear-gradient(#b9a988,#ac9a77);padding:16px 30px 10px;display:flex;align-items:flex-end;gap:26px;border-bottom:7px solid #8c7a58">
+      <sc-for list="{{ windows }}" as="w" hint-placeholder-count="5">
+        <div style="width:110px;height:64px;border-radius:10px 10px 4px 4px;background:linear-gradient(#cfe0d8,#a9c4b4);border:5px solid #8c7a58;box-shadow:inset 0 -8px 14px rgba(0,0,0,.12);position:relative;flex:none">
+          <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr"><div style="border-right:3px solid #8c7a58;border-bottom:3px solid #8c7a58"></div><div style="border-bottom:3px solid #8c7a58"></div><div style="border-right:3px solid #8c7a58"></div><div></div></div>
+        </div>
+      </sc-for>
+      <div style="margin-left:auto;flex:none;width:64px;height:64px;border-radius:50%;background:#f0e6d2;border:5px solid #8c7a58;position:relative">
+        <div style="position:absolute;left:50%;top:50%;width:3px;height:18px;background:#3b352b;transform-origin:top;transform:translateX(-50%) rotate(210deg)"></div>
+        <div style="position:absolute;left:50%;top:50%;width:3px;height:13px;background:#3b352b;transform-origin:top;transform:translateX(-50%) rotate(85deg)"></div>
+      </div>
+    </div>
+
+    <div ref="{{ floorRef }}" style="background:repeating-conic-gradient(#e6d6b6 0% 25%, #ddc9a3 0% 50%) 0 0 / 56px 56px;padding:26px 26px 30px;position:relative">
+      <div ref="{{ ceoRoomRef }}" style="background:#ead9b5;border:5px solid #b28f4f;border-radius:18px;padding:12px 18px 14px;margin-bottom:22px;position:relative;box-shadow:0 6px 0 rgba(0,0,0,.10)">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+          <span style="background:rgba(46,43,37,.82);color:#f9f4ed;border-radius:8px;padding:4px 11px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Executive office</span>
+          <span style="font-size:10.5px;font-weight:600;color:rgba(46,43,37,.6)">ceo · Sunny</span>
+          <button onClick="{{ openCeoLogs }}" style="margin-left:auto;background:rgba(46,43,37,.82);color:#f9f4ed;border:none;border-radius:8px;padding:4px 12px;font-family:ui-monospace,Menlo,monospace;font-size:10px;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:rgba(46,43,37,.95)"><span style="width:6px;height:6px;border-radius:50%;background:#9fb08a;animation:cub-blink 1.4s steps(2) infinite"></span>logs</button>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap">
+          <div style="flex:none;position:relative">{{ ceoOfficeEl }}</div>
+          <div style="flex:1;min-width:300px;background:rgba(249,244,237,.85);border:2px solid #b28f4f;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:8px;align-self:center">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <span style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8c6b2f">The plan</span>
+              <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#8b8172">{{ planLabel }}</span>
+            </div>
+            <sc-if value="{{ hasPlan }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ planRows }}" as="p" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="flex:none;width:7px;height:7px;border-radius:50%;background:{{ p.dot }};animation:{{ p.dotAnim }}"></span>
+                    <span style="background:{{ p.rug }};border:1.5px solid {{ p.rugEdge }};border-radius:999px;padding:2.5px 10px;font-size:10px;font-weight:700;color:#2e2b25;flex:none">{{ p.team }}</span>
+                    <span style="font-size:12px;font-weight:600;color:#2e2b25;text-transform:capitalize;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ p.task }}</span>
+                    <span style="margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:#8b8172;flex:none">{{ p.status }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:10.5px;color:#8b8172">Tracks run in parallel — managers report back as they finish.</div>
+            </sc-if>
+            <sc-if value="{{ noPlan }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:12px;color:#8b8172;font-style:italic">Reading the objective…</div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(560px,1fr));gap:22px">
+        <sc-for list="{{ rooms }}" as="r" hint-placeholder-count="6">
+          <div ref="{{ r.ref }}" style="background:{{ r.rug }};border:5px solid {{ r.rugEdge }};border-radius:18px;padding:12px 18px 14px;position:relative;box-shadow:0 6px 0 rgba(0,0,0,.10)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px">
+              <span style="background:rgba(46,43,37,.82);color:#f9f4ed;border-radius:8px;padding:4px 11px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">{{ r.name }}</span>
+              <span style="font-size:10.5px;font-weight:600;color:rgba(46,43,37,.6)">mgr · {{ r.mgrName }}</span>
+              <button onClick="{{ r.openLogs }}" style="margin-left:auto;background:rgba(46,43,37,.82);color:#f9f4ed;border:none;border-radius:8px;padding:4px 12px;font-family:ui-monospace,Menlo,monospace;font-size:10px;cursor:pointer;display:flex;align-items:center;gap:6px" style-hover="background:rgba(46,43,37,.95)"><span style="width:6px;height:6px;border-radius:50%;background:#9fb08a;animation:cub-blink 1.4s steps(2) infinite"></span>logs</button>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:4px">
+              <div style="flex:none;position:relative;padding:0 6px 6px 0;visibility:{{ r.mgrVis }}">{{ r.mgrEl }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:2px 8px;justify-content:flex-end;flex:1">
+                <sc-for list="{{ r.workers }}" as="a" hint-placeholder-count="5">
+                  <div style="display:flex;flex-direction:column;align-items:center;width:96px">
+                    {{ a.el }}
+                    <span style="background:rgba(46,43,37,.82);color:#f9f4ed;border-radius:7px;padding:2.5px 8px;font-size:9px;font-weight:700;line-height:1;margin-top:-6px;position:relative;z-index:4">{{ a.name }}</span>
+                    <span style="font-family:ui-monospace,Menlo,monospace;font-size:8.5px;line-height:1.4;color:{{ a.capColor }};background:rgba(249,244,237,.75);border-radius:6px;padding:1px 6px;margin-top:2px">{{ a.cap }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      {{ travelerEl }}
+      {{ ceoFlights }}
+      <div style="position:absolute;right:34px;bottom:8px;animation:cub-sway 3.5s ease-in-out infinite;transform-origin:bottom center">{{ plantEl }}</div>
+      <div style="position:absolute;left:34px;bottom:8px">{{ coolerEl }}</div>
+    </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ boardOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(42,37,29,.62);z-index:40;display:flex;align-items:center;justify-content:center;padding:24px" onClick="{{ closeBoard }}">
+      <div onClick="{{ eatClick }}" style="width:min(760px,100%);background:#8c6b4a;border:4px solid #6e5138;border-radius:20px;padding:14px;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:cub-board .45s cubic-bezier(.34,1.4,.64,1) both">
+        <div style="background:#f9f4ed;border-radius:12px;padding:28px 34px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+            <span style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent-2-700)">Task complete</span>
+            <span class="tag tag-accent-2">{{ boardTeam }}</span>
+          </div>
+          <h2 style="margin:0;font-family:var(--font-heading);font-weight:400;font-size:30px;line-height:1.15;text-transform:capitalize">{{ boardTask }}</h2>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ boardLines }}" as="l" hint-placeholder-count="3">
+              <div style="display:flex;gap:10px;align-items:baseline;font-size:14.5px;line-height:1.5;color:var(--color-neutral-900)">
+                <span style="flex:none;width:8px;height:8px;border-radius:50%;background:var(--color-accent);transform:translateY(-1px)"></span>{{ l.t }}
+              </div>
+            </sc-for>
+          </div>
+          <div style="height:1.5px;background:var(--color-divider)"></div>
+          <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+            <sc-for list="{{ boardCrew }}" as="c" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:9px">
+                {{ c.el }}
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:12px;font-weight:700">{{ c.name }}</span>
+                  <span style="font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--color-neutral-600)">{{ c.note }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <button class="btn btn-primary" onClick="{{ closeBoard }}" style="margin-left:auto;border-radius:999px;align-self:center">File it</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ logsOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:0;right:0;bottom:0;width:min(420px,92vw);background:#26221b;border-left:3px solid #4a4336;box-shadow:-18px 0 50px rgba(0,0,0,.45);z-index:50;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1.5px solid #4a4336">
+        <span style="width:8px;height:8px;border-radius:50%;background:#9fb08a;animation:cub-blink 1.4s steps(2) infinite"></span>
+        <span style="font-family:var(--font-heading);font-size:17px;color:#f9f4ed">{{ logTitle }}</span>
+        <span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#8b8172">live event stream</span>
+        <button onClick="{{ closeLogs }}" style="margin-left:auto;background:none;border:1.5px solid #4a4336;border-radius:999px;color:#c0b6a5;font-size:12px;padding:4px 13px;cursor:pointer" style-hover="border-color:#8b8172;color:#f9f4ed">close</button>
+      </div>
+      <div style="flex:1;overflow:auto;padding:14px 20px;display:flex;flex-direction:column;gap:7px">
+        <sc-for list="{{ logLines }}" as="l" hint-placeholder-count="10">
+          <div style="display:flex;gap:10px;font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.5">
+            <span style="color:#6e675a;flex:none">{{ l.time }}</span>
+            <span style="color:{{ l.color }}">{{ l.msg }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  TEAMS = [
+    ['Research', 'Rhonda', 176, 'the market scan', '#cdd8bd', '#a9b894'],
+    ['Engineering', 'Stan', 226, 'the checkout bug', '#c9cfdd', '#a2abc2'],
+    ['Finance', 'Deb', 95, 'the Q3 numbers', '#d4dcc2', '#b0bd97'],
+    ['Marketing', 'Marge', 46, 'the press blurb', '#e8d3ae', '#cbaf7d'],
+    ['Operations', 'Carl', 9, 'the load test', '#e3c6b4', '#c49e85'],
+    ['Legal', 'Phil', 315, 'the contract review', '#dcc8d4', '#bd9fb0'],
+  ];
+  DELIV = {
+    'the market scan': ['Sized six candidate markets; four are clear fits for Meridian.', 'Top pick: Lisbon \u2014 lowest CAC, strongest partner network.', 'Full sizing sheet attached. 23 tabs. Ledger is very proud.'],
+    'the checkout bug': ['Root cause: a rounding race in the coupon service.', 'Patched, tested, deployed \u2014 checkout errors 4.1% \u2192 0.02%.', 'Postmortem drafted. Stan owes Bolt a coffee.'],
+    'the Q3 numbers': ['Q3 closes 8% over plan; burn steady.', 'Meridian launch fits budget with $120k of headroom.', 'Board pack exported to the data room.'],
+    'the press blurb': ['Three headline options, legal-safe superlatives only.', 'Embargo brief sent to 14 outlets.', 'Holler only said \u201csynergy\u201d once.'],
+    'the load test': ['Held 40k concurrent checkouts at p99 380ms.', 'Two pods flapped; auto-scale rule tightened.', 'Runbook updated for launch night.'],
+    'the contract review': ['Redlined 12 clauses; all 3 dealbreakers resolved.', 'Liability cap is now mutual.', 'Signature packet ready to send.'],
+  };
+  NOTES = ['ran web_search \u00d77', 'drafted 3 versions', '2 retries, then nailed it', 'crunched 4 sheets', 'shipped the fix', 'verified every claim'];
+  NAMES = 'Bolt,Fern,Pip,Mox,Tilda,Gus,Nova,Rye,Sable,Twig,Juno,Ozzy,Wren,Bix,Clem,Dot,Ez,Flo,Gil,Hux,Ivy,Jax,Kit,Lux,Moe,Nib,Oat,Pom,Quip,Rud'.split(',');
+  TOOLS = ['web_search', 'fetch', 'write', 'code_run', 'shell', 'spreadsheets', 'summarize', 'data_viz', 'email', 'translate'];
+  ERRS = ['retrying\u2026', 'tool error', 'rate limited'];
+
+  state = { convo: null, trav: null, board: null, logTeam: null, doneOpen: false, run: 'running', objective: 'Launch the Meridian product line in six new markets by end of quarter.', modOpen: false, objTmp: '', ceo: null, ceoFly: null };
+  BACKLOG = ['the onboarding email', 'the pricing page', 'the vendor audit', 'the launch checklist', 'the demo script', 'the churn report'];
+
+  DESK = `<svg width="96" viewBox="0 0 100 46" style="display:block"><path d="M10 8 h80 l7 16 H3 z" fill="#a8815c" stroke="#7c5b3c" stroke-width="2.5"/><rect x="3" y="24" width="94" height="9" rx="2" fill="#8c6b4a" stroke="#7c5b3c" stroke-width="2.5"/><rect x="10" y="33" width="7" height="11" fill="#7c5b3c"/><rect x="83" y="33" width="7" height="11" fill="#7c5b3c"/><rect x="66" y="10" width="18" height="11" rx="2" fill="#474238" transform="rotate(3 75 15)"/><rect x="68" y="12" width="14" height="7" rx="1" fill="#9fb08a" transform="rotate(3 75 15)"/><rect x="16" y="14" width="13" height="7" rx="1.5" fill="#f2ead8" stroke="#c0b6a5" stroke-width="1.5" transform="rotate(-4 22 17)"/></svg>`;
+  PLANT = `<svg width="58" viewBox="0 0 60 74" style="display:block"><path d="M30 44 q-16 -8 -14 -28 q14 4 16 24 q4 -22 18 -24 q2 22 -16 30" fill="#7a8a5e" stroke="#5c6a45" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 46 h32 l-4 24 h-24 z" fill="#c4744a" stroke="#96522e" stroke-width="3"/></svg>`;
+  COOLER = `<svg width="46" viewBox="0 0 48 78" style="display:block"><rect x="14" y="4" width="20" height="22" rx="5" fill="#bcd4e6" stroke="#7d9db5" stroke-width="3"/><rect x="8" y="26" width="32" height="42" rx="6" fill="#f0e6d2" stroke="#b7a988" stroke-width="3"/><rect x="18" y="34" width="12" height="7" rx="2" fill="#7d9db5"/><rect x="12" y="68" width="8" height="8" fill="#b7a988"/><rect x="28" y="68" width="8" height="8" fill="#b7a988"/></svg>`;
+  FOLDER = `<svg width="34" viewBox="0 0 36 28" style="display:block"><path d="M3 6 a3 3 0 0 1 3 -3 h9 l4 4 h11 a3 3 0 0 1 3 3 v12 a3 3 0 0 1 -3 3 H6 a3 3 0 0 1 -3 -3 z" fill="#e8b04b" stroke="#b2622d" stroke-width="2.5"/><rect x="7" y="12" width="14" height="10" rx="1.5" fill="#f9f4ed" transform="rotate(-5 14 17)"/></svg>`;
+
+  async componentDidMount() {
+    this._alive = true;
+    this.M = await import(new URL('./mascot.js', document.baseURI).href);
+    this.roomEls = []; this.convoCount = 0;
+    this.teamLogs = this.TEAMS.map(() => []);
+    this.ceoLogs = [];
+    this.qid = 0; this.backlog = [...this.BACKLOG];
+    this.queue = this.TEAMS.map((t) => ({ id: this.qid++, task: t[3], status: 'queued', team: null }));
+    const GEARS = ['none', 'hardhat', 'beret', 'cap', 'antenna'];
+    const PROPS = ['wrench', 'magnifier', 'pencil', 'calculator', 'clipboard', 'megaphone', 'flask', 'coffee'];
+    let idx = 0;
+    this.teams = this.TEAMS.map(([name, mgrName, hue, task, rug, rugEdge], ti) => ({
+      name, mgrName, hue, task, rug, rugEdge,
+      workers: Array.from({ length: 5 }, () => {
+        const i = idx++;
+        const s = Math.random() < 0.7 ? 'working' : 'idle';
+        return {
+          team: ti, name: this.NAMES[i % this.NAMES.length],
+          hue: [24, 95, 46, 315, 226, 176, 9, 135][(i * 3) % 8],
+          gear: GEARS[(i * 5) % 5], prop: PROPS[(i * 7) % 8],
+          s, cap: s === 'working' ? this.TOOLS[i % this.TOOLS.length] : 'awaiting task',
+        };
+      }),
+    }));
+    this.allWorkers = this.teams.flatMap((t) => t.workers);
+    this._w = setInterval(() => {
+      if (this.state.run !== 'running') return;
+      for (let k = 0; k < 6; k++) {
+        const a = this.allWorkers[Math.floor(Math.random() * this.allWorkers.length)];
+        const r = Math.random();
+        a.s = r < 0.66 ? 'working' : r < 0.9 ? 'idle' : 'fumble';
+        if (a.s === 'working') { a.cap = this.TOOLS[Math.floor(Math.random() * this.TOOLS.length)]; this.log(a.team, `${a.name} \u2192 ${a.cap}()`, '#9fb08a'); }
+        else if (a.s === 'idle') { a.cap = 'awaiting task'; this.log(a.team, `${a.name} idle \u2014 awaiting assignment`, '#8b8172'); }
+        else { a.cap = this.ERRS[Math.floor(Math.random() * this.ERRS.length)]; this.log(a.team, `${a.name} \u2717 ${a.cap}`, '#e8935a'); }
+      }
+      this.forceUpdate();
+    }, 1500);
+    this._m = setInterval(() => { if (this.state.run === 'running' && !this.state.convo && !this.state.board) this.convoCycle(); }, 9500);
+    this._ceoT = setTimeout(() => this.planCycle('objective set'), 1800);
+    this._ceoI = setInterval(() => { if (this.state.run === 'running' && (!this.state.ceo || this.state.ceo.phase === 'working')) this.planCycle('fresh sweep of the objective'); }, 34000);
+    this.forceUpdate();
+  }
+  componentWillUnmount() { this._alive = false; clearInterval(this._w); clearInterval(this._m); clearInterval(this._ceoI); clearTimeout(this._t); clearTimeout(this._tb); clearTimeout(this._ceoT); }
+
+  clog(msg, color) {
+    const t = new Date();
+    const time = String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0') + ':' + String(t.getSeconds()).padStart(2, '0');
+    this.ceoLogs.push({ time, msg, color });
+    if (this.ceoLogs.length > 60) this.ceoLogs.shift();
+  }
+
+  ceoPos() {
+    const el = this.ceoRoomEl;
+    if (!el) return { x: 60, y: 20 };
+    return { x: el.offsetLeft + 70, y: el.offsetTop + el.offsetHeight - 100 };
+  }
+
+  async planCycle(reason) {
+    if (!this._alive || this.state.run !== 'running') return;
+    if (this.state.ceo && this.state.ceo.phase !== 'working') return;
+    this.clog('planning \u2014 ' + reason, '#f2c14e');
+    this.setState({ ceo: { phase: 'planning', plan: [] } });
+    await this.sleep(2600); if (!this._alive || this.state.run !== 'running') return;
+    const order = this.teams.map((_, i) => i).sort(() => Math.random() - 0.5);
+    const plan = order.slice(0, 2 + Math.floor(Math.random() * 2)).map((ti) => ({ ti, task: this.teams[ti].task, status: 'delegating\u2026' }));
+    this.clog('plan: ' + plan.map((p) => this.teams[p.ti].name).join(' + ') + ' \u2014 parallel tracks', '#9fb08a');
+    const s = this.ceoPos();
+    this.setState({ ceo: { phase: 'delegating', plan }, ceoFly: plan.map(() => ({ ...s, instant: true })) });
+    await this.sleep(80); if (!this._alive) return;
+    this.setState({ ceoFly: plan.map((p) => ({ ...this.posFor(p.ti, true), instant: false })) });
+    await this.sleep(2400); if (!this._alive) return;
+    plan.forEach((p) => {
+      p.status = 'delegated \u2713';
+      this.clog('\u2192 ' + this.teams[p.ti].name + ': \u201c' + p.task + '\u201d', '#e8b04b');
+      this.log(p.ti, 'brief \u2190 CEO: \u201c' + p.task + '\u201d \u2014 parallel track', '#f2c14e');
+      let qi = this.queue.find((q) => q.task === p.task && q.status !== 'done');
+      if (!qi) { qi = { id: this.qid++, task: p.task, status: 'queued', team: null }; this.queue.push(qi); }
+      qi.status = 'in progress'; qi.team = this.teams[p.ti].name;
+    });
+    this.setState({ ceo: { phase: 'working', plan }, ceoFly: null });
+  }
+
+  ceoUnit() {
+    const ph = this.state.ceo ? this.state.ceo.phase : null;
+    const bub = ph === 'planning' ? this.bubble('breaking it into jobs\u2026', false) : ph === 'delegating' ? this.bubble('go \u2014 in parallel!', false) : null;
+    return React.createElement('div', { style: { position: 'relative', width: '150px', height: '142px' } },
+      bub,
+      React.createElement('div', { style: { position: 'absolute', left: '50%', bottom: '30px', transform: 'translateX(-50%)', zIndex: 1 } }, this.mEl({ hue: 46, gear: 'none', prop: ph === 'planning' ? 'pencil' : 'megaphone', expr: ph ? 'focused' : 'happy', state: ph === 'planning' || ph === 'delegating' ? 'working' : 'idle' }, 92)),
+      React.createElement('div', { style: { position: 'absolute', left: '8px', bottom: 0, zIndex: 3, transform: 'scale(1.3)', transformOrigin: 'bottom left', lineHeight: 0, filter: 'drop-shadow(0 3px 0 rgba(0,0,0,.12))' }, dangerouslySetInnerHTML: { __html: this.DESK } })
+    );
+  }
+  sleep(ms) { return new Promise((r) => { this._t = setTimeout(r, ms); }); }
+
+  log(ti, msg, color) {
+    const t = new Date();
+    const time = String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0') + ':' + String(t.getSeconds()).padStart(2, '0');
+    const arr = this.teamLogs[ti];
+    arr.push({ time, msg, color });
+    if (arr.length > 60) arr.shift();
+  }
+
+  posFor(ti, visiting) {
+    const el = this.roomEls[ti];
+    if (!el) return { x: 40, y: 40 };
+    // visitors stop beside the resident manager (who stands at +16), facing them
+    return { x: el.offsetLeft + (visiting ? 118 : 16), y: el.offsetTop + el.offsetHeight - 148 };
+  }
+
+  async convoCycle() {
+    const n = this.teams.length;
+    const a = Math.floor(Math.random() * n);
+    let b = Math.floor(Math.random() * n); if (b === a) b = (a + 1) % n;
+    const A = this.posFor(a), B = this.posFor(b, true);
+    const tA = this.teams[a], tB = this.teams[b];
+    this.log(a, `handoff \u2192 ${tB.name}: \u201c${tA.task}\u201d files packed`, '#e8b04b');
+    let qi = this.queue.find((q) => q.task === tA.task && q.status === 'queued');
+    if (!qi) { qi = { id: this.qid++, task: tA.task, status: 'queued', team: null }; this.queue.push(qi); }
+    qi.status = 'in progress'; qi.team = tB.name;
+    this.setState({ convo: { a, b, phase: 'walk' }, trav: { x: A.x, y: A.y, instant: true, flip: B.x >= A.x ? 1 : -1 } });
+    await this.sleep(60); if (!this._alive) return;
+    this.setState({ trav: { x: B.x, y: B.y, instant: false, flip: B.x >= A.x ? 1 : -1 } });
+    await this.sleep(2400); if (!this._alive) return;
+    this.setState({ convo: { a, b, phase: 'handoff' }, trav: { ...this.state.trav, flip: -1 } }); // turn to face the resident mgr
+    this.log(b, `handoff \u2190 ${tA.name}: received \u201c${tA.task}\u201d`, '#e8b04b');
+    await this.sleep(2800); if (!this._alive) return;
+    this.setState({ convo: { a, b, phase: 'return' }, trav: { x: A.x, y: A.y, instant: false, flip: A.x >= B.x ? 1 : -1 } });
+    await this.sleep(2400); if (!this._alive) return;
+    this.setState({ convo: null, trav: null });
+    this.convoCount++;
+    if (this.convoCount % 2 === 0) {
+      this._tb = setTimeout(() => {
+        if (!this._alive) return;
+        this.log(b, `deliverable filed: \u201c${tA.task}\u201d \u2713`, '#f2c14e');
+        const done = this.queue.find((q) => q.task === tA.task && q.status === 'in progress');
+        if (done) {
+          done.status = 'done';
+          const t = new Date();
+          done.time = String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0');
+          const next = this.backlog.shift();
+          if (next) { this.queue.push({ id: this.qid++, task: next, status: 'queued', team: null }); this.backlog.push(next); }
+        }
+        this.setState({
+          doneOpen: false,
+          board: {
+            team: tB.name, task: tA.task,
+            lines: (this.DELIV[tA.task] || []).map((t) => ({ t })),
+            crew: tB.workers.slice(0, 3).map((w, i) => ({ w, note: this.NOTES[(i * 2 + b) % this.NOTES.length] })),
+          },
+        });
+      }, 4000);
+    }
+  }
+
+  setRun(run) {
+    if (run === this.state.run) return;
+    if (run === 'paused') {
+      this.allWorkers.forEach((w) => { w.s = 'idle'; w.cap = 'on break'; });
+      this.teams.forEach((_, ti) => this.log(ti, 'run paused \u2014 crew on break', '#e8b04b'));
+      this.setState({ run, convo: null, trav: null });
+    } else if (run === 'stopped') {
+      this.allWorkers.forEach((w) => { w.s = 'idle'; w.cap = 'awaiting task'; });
+      this.queue.forEach((q) => { if (q.status === 'in progress') { q.status = 'queued'; q.team = null; } });
+      this.teams.forEach((_, ti) => this.log(ti, 'run stopped \u2014 tasks returned to queue', '#e8935a'));
+      this.setState({ run, convo: null, trav: null, board: null });
+    } else {
+      this.teams.forEach((_, ti) => this.log(ti, 'run resumed \u2014 back to work', '#9fb08a'));
+      this.setState({ run });
+    }
+  }
+
+  icon(d, color) {
+    return React.createElement('div', { style: { lineHeight: 0 }, dangerouslySetInnerHTML: { __html: `<svg width="15" height="15" viewBox="0 0 24 24" fill="${color}" style="display:block">${d}</svg>` } });
+  }
+
+  mEl(opts, size) {
+    if (!this.M) return null;
+    return React.createElement('div', { style: { width: size + 'px', lineHeight: 0, flex: 'none' }, dangerouslySetInnerHTML: { __html: this.M.mascotSVG({ ...opts, styleDir: 'a', size }) } });
+  }
+
+  bubble(text, warn) {
+    return React.createElement('div', {
+      style: { position: 'absolute', bottom: '100%', left: '10px', marginBottom: '3px', background: '#f9f4ed', border: '2px solid ' + (warn ? '#c67139' : '#474238'), borderRadius: '10px', padding: '6px 10px', boxShadow: '3px 3px 0 rgba(46,43,37,.25)', animation: 'cub-pop .35s cubic-bezier(.34,1.56,.64,1) both', whiteSpace: 'nowrap', lineHeight: 1, fontFamily: 'Figtree, sans-serif', fontSize: '11.5px', fontWeight: 700, color: warn ? '#8c491a' : '#2e2b25', zIndex: 8 },
+    }, text, React.createElement('div', { style: { position: 'absolute', top: '100%', left: '18px', width: '9px', height: '9px', background: '#f9f4ed', borderRight: '2px solid ' + (warn ? '#c67139' : '#474238'), borderBottom: '2px solid ' + (warn ? '#c67139' : '#474238'), transform: 'translateY(-52%) rotate(45deg)' } }));
+  }
+
+  zzz() {
+    const z = (d, s, x) => React.createElement('span', {
+      key: d, style: { position: 'absolute', bottom: '92%', left: 50 + x + '%', fontFamily: 'Figtree, sans-serif', fontWeight: 800, fontSize: s + 'px', color: '#5f584a', opacity: 0, animation: 'cub-zz 2.4s ease-out ' + d + 's infinite', pointerEvents: 'none', zIndex: 6, textShadow: '0 1px 0 rgba(249,244,237,.6)' },
+    }, 'z');
+    return [z(0, 11, 0), z(0.8, 14, 9), z(1.6, 17, 18)];
+  }
+
+  deskUnit(a) {
+    return React.createElement('div', { style: { position: 'relative', width: '96px', height: '108px' } },
+      a.s === 'idle' ? this.zzz() : null,
+      React.createElement('div', { style: { position: 'absolute', left: '50%', bottom: '26px', transform: 'translateX(-50%)', zIndex: 1 } }, this.mEl({ hue: a.hue, gear: a.gear, prop: a.prop, expr: a.s === 'working' ? 'focused' : a.s === 'fumble' ? 'worried' : 'sleepy', state: a.s }, 64)),
+      React.createElement('div', { style: { position: 'absolute', left: 0, bottom: 0, zIndex: 3, lineHeight: 0, filter: 'drop-shadow(0 3px 0 rgba(0,0,0,.12))' }, dangerouslySetInnerHTML: { __html: this.DESK } })
+    );
+  }
+
+  renderVals() {
+    if (!this.teams) return { rooms: [], windows: [], nWorking: 0, nIdle: 0, nFumble: 0, plantEl: null, coolerEl: null, travelerEl: null, boardOpen: false, logsOpen: false, floorRef: () => {}, ceoRoomRef: () => {}, planRows: [], hasPlan: false, noPlan: true, ceoFlights: null, ceoOfficeEl: null, planLabel: '' };
+    const { convo, trav, board, logTeam } = this.state;
+    const capColor = { working: '#4c5a35', idle: '#8b8172', fumble: '#8c491a' };
+
+    const rooms = this.teams.map((t, ti) => {
+      const fumbler = t.workers.find((w) => w.s === 'fumble');
+      const traveling = convo && ti === convo.a;
+      let mgrBubble = null;
+      if (convo && ti === convo.b && convo.phase === 'handoff') {
+        mgrBubble = this.bubble(`got it \u2014 ${t.workers[0].name}\u2019s on it`, false);
+      } else if (!traveling && this.state.ceo && this.state.ceo.phase === 'delegating' && this.state.ceo.plan.some((p) => p.ti === ti)) {
+        mgrBubble = this.bubble('CEO brief incoming \u2014 on it', false);
+      } else if (!traveling && fumbler) {
+        mgrBubble = this.bubble(`\u26a0 ${fumbler.name} hit a snag \u2014 reassigning`, true);
+      }
+      return {
+        name: t.name, mgrName: t.mgrName, rug: t.rug, rugEdge: t.rugEdge,
+        ref: (el) => { this.roomEls[ti] = el; },
+        openLogs: () => this.setState({ logTeam: ti }),
+        mgrVis: traveling ? 'hidden' : 'visible',
+        mgrEl: React.createElement('div', { style: { position: 'relative' } },
+          mgrBubble,
+          this.mEl({ hue: t.hue, gear: 'headset', prop: 'clipboard', expr: convo && (ti === convo.a || ti === convo.b) || fumbler ? 'focused' : 'happy', state: fumbler && !traveling ? 'working' : 'idle' }, 92)
+        ),
+        workers: t.workers.map((a) => ({ name: a.name, cap: a.cap, capColor: capColor[a.s], el: this.deskUnit(a) })),
+      };
+    });
+
+    let travelerEl = null;
+    if (convo && trav) {
+      const tA = this.teams[convo.a];
+      const handing = convo.phase === 'handoff';
+      travelerEl = React.createElement('div', {
+        style: { position: 'absolute', left: trav.x + 'px', top: trav.y + 'px', zIndex: 20, transition: trav.instant ? 'none' : 'left 2.3s ease-in-out, top 2.3s ease-in-out', pointerEvents: 'none' },
+      },
+        handing ? this.bubble(`${tA.mgrName}: files for ${tA.task}`, false) : null,
+        React.createElement('div', { style: { animation: handing ? 'none' : 'cub-step .45s ease-in-out infinite', position: 'relative' } },
+          React.createElement('div', { style: { transform: 'scaleX(' + trav.flip + ')', transformOrigin: '50% 100%' } }, this.mEl({ hue: tA.hue, gear: 'headset', prop: 'none', expr: 'focused', state: 'idle' }, 92)),
+          React.createElement('div', { style: { position: 'absolute', bottom: '18px', [trav.flip === 1 ? 'right' : 'left']: '-10px', lineHeight: 0, animation: handing ? 'cub-pulse 1s ease-in-out infinite' : 'none' }, dangerouslySetInnerHTML: { __html: this.FOLDER } })
+        )
+      );
+    }
+
+    const ceo = this.state.ceo;
+    let ceoFlights = null;
+    if (this.state.ceoFly) {
+      ceoFlights = React.createElement(React.Fragment, null, this.state.ceoFly.map((f, i) => React.createElement('div', {
+        key: i,
+        style: { position: 'absolute', left: f.x + 'px', top: f.y + 'px', zIndex: 21, transition: f.instant ? 'none' : 'left 2.2s ease-in-out, top 2.2s ease-in-out', pointerEvents: 'none', lineHeight: 0, filter: 'drop-shadow(0 3px 4px rgba(0,0,0,.2))' },
+        dangerouslySetInnerHTML: { __html: this.FOLDER },
+      })));
+    }
+    const counts = this.allWorkers.reduce((c, a) => (c[a.s]++, c), { working: 0, idle: 0, fumble: 0 });
+    const open = this.queue.filter((q) => q.status !== 'done').sort((x, y) => (x.status === 'in progress' ? -1 : 0) - (y.status === 'in progress' ? -1 : 0));
+    const doneQ = this.queue.filter((q) => q.status === 'done').reverse();
+    return {
+      qCount: open.length,
+      qItems: open.map((q) => ({
+        task: q.task,
+        meta: q.status === 'in progress' ? 'in progress \u00b7 ' + q.team : 'queued',
+        dot: q.status === 'in progress' ? '#7a8a5e' : '#b7ab94',
+        dotAnim: q.status === 'in progress' ? 'cub-blink 1.4s steps(2) infinite' : 'none',
+        border: q.status === 'in progress' ? 'var(--color-accent-2-300)' : 'var(--color-divider)',
+      })),
+      doneItems: doneQ.map((q) => ({ task: q.task, time: q.time })),
+      doneLabel: 'Completed \u00b7 ' + doneQ.length,
+      doneOpen: this.state.doneOpen && doneQ.length > 0,
+      doneArrow: this.state.doneOpen && doneQ.length > 0 ? 90 : 0,
+      toggleDone: () => this.setState({ doneOpen: !this.state.doneOpen }),
+      rooms, windows: [1, 2, 3, 4, 5],
+      floorRef: (el) => { this.floorEl = el; },
+      travelerEl, ceoFlights,
+      ceoRoomRef: (el) => { this.ceoRoomEl = el; },
+      openCeoLogs: () => this.setState({ logTeam: 'ceo' }),
+      ceoOfficeEl: this.ceoUnit(),
+      planLabel: !ceo ? '' : ceo.phase === 'planning' ? 'reading the objective\u2026' : ceo.phase === 'delegating' ? 'delegating \u2014 ' + ceo.plan.length + ' teams in parallel' : ceo.plan.length + ' parallel tracks in flight',
+      hasPlan: !!ceo && ceo.plan.length > 0,
+      noPlan: !ceo || ceo.plan.length === 0,
+      planRows: ceo ? ceo.plan.map((p) => ({
+        team: this.teams[p.ti].name, task: p.task, rug: this.teams[p.ti].rug, rugEdge: this.teams[p.ti].rugEdge, status: p.status,
+        dot: p.status.indexOf('delegated') === 0 ? '#7a8a5e' : '#e8b04b',
+        dotAnim: p.status.indexOf('delegated') === 0 ? 'none' : 'cub-blink 1.2s steps(2) infinite',
+      })) : [],
+      nWorking: counts.working, nIdle: counts.idle, nFumble: counts.fumble,
+      ceoEl: this.mEl({ hue: 46, gear: 'none', prop: 'megaphone', expr: this.state.run === 'running' ? 'focused' : 'sleepy', state: this.state.run === 'running' ? 'working' : 'idle' }, 72),
+      objective: this.state.objective,
+      runLabel: this.state.run === 'running' ? '\u25cf live \u2014 crew clocked in' : this.state.run === 'paused' ? '\u25cf paused \u2014 crew on break' : '\u25cf stopped \u2014 awaiting re-brief',
+      runColor: this.state.run === 'running' ? 'var(--color-accent-2-700)' : this.state.run === 'paused' ? 'var(--color-accent-700)' : 'var(--color-neutral-500)',
+      ctrls: [
+        { key: 'running', title: 'Play', d: '<path d="M8 5.5 L18.5 12 L8 18.5 Z"/>' },
+        { key: 'paused', title: 'Pause', d: '<rect x="6.5" y="5.5" width="4" height="13" rx="1.2"/><rect x="13.5" y="5.5" width="4" height="13" rx="1.2"/>' },
+        { key: 'stopped', title: 'Stop', d: '<rect x="6.5" y="6.5" width="11" height="11" rx="2"/>' },
+      ].map((c) => {
+        const on = this.state.run === c.key;
+        return {
+          title: c.title, pick: () => this.setRun(c.key),
+          bg: on ? 'var(--color-accent)' : 'var(--color-neutral-100)',
+          bc: on ? 'var(--color-accent)' : 'var(--color-divider)',
+          el: this.icon(c.d, on ? '#f9f4ed' : '#8b8172'),
+        };
+      }),
+      openModify: () => this.setState({ modOpen: true, objTmp: this.state.objective }),
+      closeModify: () => this.setState({ modOpen: false }),
+      modOpen: this.state.modOpen,
+      objTmp: this.state.objTmp,
+      onObjTmp: (e) => this.setState({ objTmp: e.target.value }),
+      saveModify: () => {
+        const obj = this.state.objTmp.trim() || this.state.objective;
+        this.teams.forEach((_, ti) => this.log(ti, 'objective updated \u2014 re-briefing crew', '#f2c14e'));
+        this.setState({ objective: obj, modOpen: false, run: 'running', ceo: null, ceoFly: null });
+        this._ceoT = setTimeout(() => this.planCycle('objective updated'), 900);
+      },
+      plantEl: React.createElement('div', { style: { lineHeight: 0 }, dangerouslySetInnerHTML: { __html: this.PLANT } }),
+      coolerEl: React.createElement('div', { style: { lineHeight: 0 }, dangerouslySetInnerHTML: { __html: this.COOLER } }),
+      boardOpen: !!board,
+      boardTeam: board ? board.team : '', boardTask: board ? board.task : '',
+      boardLines: board ? board.lines : [],
+      boardCrew: board ? board.crew.map((c) => ({ name: c.w.name, note: c.note, el: this.mEl({ hue: c.w.hue, gear: c.w.gear, prop: c.w.prop, expr: 'happy', state: 'idle' }, 46) })) : [],
+      closeBoard: () => this.setState({ board: null }),
+      eatClick: (e) => e.stopPropagation(),
+      logsOpen: logTeam !== null,
+      logTitle: logTeam === 'ceo' ? 'Executive office' : logTeam !== null ? this.teams[logTeam].name : '',
+      logLines: logTeam === 'ceo' ? [...this.ceoLogs].reverse().slice(0, 34) : logTeam !== null ? [...this.teamLogs[logTeam]].reverse().slice(0, 34) : [],
+      closeLogs: () => this.setState({ logTeam: null }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
